@@ -41,14 +41,6 @@
   <div class="hero-unit">
      <table id="mainTable" class="table table-striped">
          <thead><tr>
-            <!-- <th onclick="columnSort(0)" value="0">ID <img id="asc" width="30px" height="30px"></th>
-             <th onclick="columnSort(1)" value="0">Firstname <img id="asc" width="30px" height="30px"></th>
-             <th onclick="columnSort(2)" value="0">Lastname <img id="asc" width="30px" height="30px"></th>
-             <th onclick="columnSort(3)" value="0">Age<img id="asc" width="30px" height="30px"></th>
-             <th onclick="columnSort(4)" value="0">Username <img id="asc" width="30px" height="30px"></th>
-             <th onclick="columnSort(5)" value="0">Password<img id="asc" width="30px" height="30px"></th>
-             <th onclick="columnSort(6)" value="0">Contact Number<img id="asc" width="30px" height="30px"></th>
-             <th onclick="columnSort(7)" value="0">Position<img id="asc" width="30px" height="30px"></th> -->
              <th onclick="columnSort(0)" value="0">ID</th>
               <th onclick="columnSort(1)" value="0">Firstname</th>
               <th onclick="columnSort(2)" value="0">Lastname</th>
@@ -59,12 +51,8 @@
               <th onclick="columnSort(7)" value="0">Gender</th>
               <th></th>
         </tr></thead>
-         <tbody>
+        <tbody>
 <?php
-
-// $limitRows = $_POST["limitRows"];
-// $fieldList = $_POST["fieldList"];
-// $valueList = $_POST["valueList"];
 
 class TableRows extends RecursiveIteratorIterator {
     private static $index=0;
@@ -100,19 +88,6 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "select StaffID, Firstname, LastName, Age, Username, `ContactNumber`, Position, Gender from staff";
-    /*if is_null($limitRows){
-      $sql = $sql." limit $limitRows;";
-     } else {
-      $sql = $sql.";";
-    }*/
-    // dynamic filter by field
-    // $tmp=[];
-    // if (!is_null($fieldList) && !is_null($valueList)) {
-    //   foreach ($fieldList as $index=>$field ){
-    //     array_push($tmp, "$field=".$valueList[$index]);
-    //   }
-    //   $sql = $sql."where ".implode(", ", $tmp).";";
-    // }
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();   // $stmt = PDOStatement class
@@ -132,21 +107,7 @@ $conn = null;
 // echo "</table>";
 
 ?>
-</tbody>
-<!-- <tfoot><tr><th><strong>TOTAL</strong></th><th></th><th></th><th></th></tr></thead> -->
-</table>
-</div>
-</div>
-<!-- <button type="button" id="updateBtn">Update</button><br> -->
-<!-- <button type="button" id="addBtn">Add Row</button><br> -->
-<!-- <button type="button" id="delBtn">Delete Row</button> -->
-
-<datalist id="productName">
-    <option value="Drink">Drink</option>
-    <option value="Sides">Sides</option>
-    <option value="Noodle">Noodle</option>
-</datalist>
-
+</tbody></table></div></div>
 
 <footer class="footer">
     <div class="container">
@@ -194,7 +155,6 @@ $conn = null;
 </div>
 
 <script>
-// $('#mainTable').editableTableWidget().numericInputExample().find('td:first').focus();
 $('#mainTable').editableTableWidget().numericInputExample();
 </script>
 
