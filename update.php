@@ -1,14 +1,17 @@
 <?php
-// update: valueList[[id1, ..],[id2, ..]]
-// insertEmpty: idList, target_table
-// delete: only delete 1 row at a time
+/*** compulsory: (target_table, operation)
+    update: headerList, idList, idName
+    insertEmpty: idName
+    insert: headerList, valueList
+    delete: idName, valueList (only 1 [])  
+***/
 
-$valueList = $_POST["valueList"];
-$target_table = $_POST["target_table"];
-$headerList = $_POST["headerList"];
-$idList = $_POST["idList"];
-$idName = $_POST["idName"];
 $operation = $_POST["operation"];
+$target_table = $_POST["target_table"];
+if(isset($_POST["valueList"])) { $valueList = $_POST["valueList"]; }
+if(isset($_POST["headerList"])) { $headerList = $_POST["headerList"]; }
+if(isset($_POST["idList"])) { $idList = $_POST["idList"]; }
+if(isset($_POST["idName"])) { $idName = $_POST["idName"]; }
 
 $servername="localhost";
 $username = "user1";
@@ -27,9 +30,12 @@ try {
         $stmt = $conn->prepare($sql);
         // echo $sql;
         foreach ($valueList as $index=>$value) {
-            array_push($value, strval($idList[$index]));
+            $value2 = array_map(function($val){
+              return $val === "" ? NULL : $val;
+            }, $value); // convert empty value to NULL to avoid error
+            array_push($value2, strval($idList[$index]));
             // print_r($value);
-            $stmt->execute($value);
+            $stmt->execute($value2);
         }
         // echo "successfully updated " . $stmt->rowCount() . " rows";
 
@@ -56,7 +62,7 @@ try {
         $values = implode(", ", $valueList);
         $sql = "delete from `$target_table` where $idName in ($values)";
         $conn->exec($sql);
-
+        echo $sql;
         // echo $valueList." deleted successfully";
     }
 

@@ -8,7 +8,7 @@ updated = idChange-beforeChange-afterChange
 var idChange = [], insertRows=[], deleteRows=[], oldIDs=[], newIDs=[],beforeChange=[],afterChange=[], element={};
 var associativeArray = {};
 var currentCell = {};
-var keyID,username;
+var keyID,username,pwd,priv,delID;
 
 $.fn.numericInputExample = function () {
 	'use strict';
@@ -26,17 +26,24 @@ $.fn.numericInputExample = function () {
 
 	}).on('validate', function (evt, value) { // validate before change
 		var cell = $(this), column = cell.index();
-		if (column === 1 || column===2) { // for column name
+		if (column == 1 || column ==2) { // for column name
 			var re = /^[a-zA-Z ]+$/g;
 			return !!value && value.trim().length > 0 && !!value.match(re);
 			// !! check if is null
-		} else if (column === 0) {
+		} else if (column == 0) {
 			var tmp = parseInt(value);
 			return !isNaN(tmp) && tmp<1000;
-		} else if (column === 3) {
-			// return !isNaN(parseFloat(value)) && isFinite(value); // is finite
-			var re = /^[a-zA-Z@_#$%-.]+$/g;
-			return !!value && value.trim().length > 0 && !!value.match(re);
+		} else if (column == 3) {
+			// return !isNaN(parseFloat(value)) && isFinite(value); 
+			
+			return (value == parseInt(value,10));
+			
+			// var re = /^[a-zA-Z@_#$%-.]+$/g;
+			// return !!value && value.trim().length > 0 && !!value.match(re);
+		} else if (column == 5) {
+			// console.log(parseInt(value,10));
+			// console.log(value);
+			return (value == parseInt(value,10));
 		}
 	}).on('click', function(){
 		currentCell = element.find('td:focus');
@@ -97,7 +104,7 @@ $(document).ready(function(){
 		    console.log("1:"+val);
 		});
 
-		header=['FirstName','LastName','Age','UserName','ContactNumber','Position','Gender']
+		header=['FirstName','LastName','Age','ContactNumber','Position','Gender']
 		if (updateRowNo.length>0){
 			$.ajax({
 				type: "POST",
@@ -114,22 +121,6 @@ $(document).ready(function(){
 				alert(error);
 			});
 		}
-
-		//
-		// if (match_insert.length>0){
-		// 	$.ajax({
-		// 		type: "POST",
-		// 		url: "update.php",
-		// 		data: { "valueList": layer2, "headerList": header, "operation": "insert"},
-		// 		success: function(data, txt, jqxhr){
-		// 			alert(data);
-		// 			insertRows=[];
-		// 		}
-		// 	}).fail(function(xhr, status, error){
-		// 		alert(error);
-		// 	});
-		// }
-
 	});
 
 	function refreshTable(){
@@ -143,64 +134,41 @@ $(document).ready(function(){
 	}
 
 	$("#addBtn").click(function(){
-		$("#addUserModal").modal("show");
-		
-		$("addUserModal #OK").click(function(){
-			addUser();
+		$("#addUserModal #username").val('');
+		$("#addUserModal #pwd").val('');
+		$("#addUserModal").modal('show');
+
+		// need one to ensure only run once, due to modal transition issue
+		$("#addUserModal #OK").one('click',function(){
+			username = $("#addUserModal #username").val();
+			pwd = $("#addUserModal #pwd").val();
+			priv = $("#addUserModal #privType").text();
+			// console.log(add_name+' '+add_pwd);
+			
+			if (username=="" || pwd==""){
+				alert("Please fill in all the fields!");
+				$("#addUserModal").one('hidden.bs.modal',function(){
+					$("#addUserModal").modal('show');
+				});
+				// $("#addUserModal").modal('hide');
+				
+			} else {
+				addUser();
+			}
 		});
-		// $.ajax({
-		// 	type: "POST",
-		// 	url: "update.php",
-		// 	data: {"operation": "insertEmpty","target_table":"staff","idName":"staffID"},
-		// 	success: function(data, txt, jqxhr){
-		// 		// alert("You have successfully added.");
-		// 		refreshTable();
-		// 	}
-		// }).fail(function(xhr, status, error){
-		// 	alert(error);
-		// });
+
 	});
-		// $('#mainTable').editableTableWidget().numericInputExample();
-	// });
 
-	// $("#addBtn").click(function(){
-	// 	var a = $("#mainTable tbody tr:nth-child(3) td:not(.no_focus)");
-	// 	console.log( a.text() ); //.not(".no_focus")
-	// });
-
-	// header=['FirstName','LastName','Age','UserName','ContactNumber','Position','Gender']
-	// $("#addBtn").click(function(){
-	// 	$.ajax({
-	// 		type: "POST",
-	// 		url: "update.php",
-	// 		data: {"operation": "insert","target_table":"staff","idName":"staffID","headerList":header,"valueList":[['Ken','af',31,'hello','21321453','Cook','F'],['Ken','bf',32,'hello','21321453','Cook','F']],"idList":""},
-	// 		success: function(data, txt, jqxhr){
-	// 			refreshTable();
-	// 		}
-	// 	}).fail(function(xhr, status, error){
-	// 		alert(error);
-	// 	});
-	// });
-
-	var delID="";
 	// delete button
 	$(".delBtn").click(function(){
 		// console.log($(this).parent().parent().text());
 		var thisRow = $(this).parent().parent();
 		delID = thisRow.find("td").first().text();
+		username = thisRow.find("td:nth-child(5)").text();
 		$("#deleteModal").modal('show');
-		$("#deleteModal #OK").click(function(){
+		$("#deleteModal #OK").one('click',function(){
 			// console.log('delID:'+delID);
-			$.ajax({
-				type: "POST",
-				url: "update.php",
-				data: { "valueList": [delID], "operation": "delete","target_table":"staff","idName":"staffID"},
-				success: function(data, txt, jqxhr){
-					thisRow.remove();
-				}
-			}).fail(function(xhr, status, error){
-				alert(error);
-			});
+			deleteUser();
 		});
 	});
 
@@ -331,17 +299,50 @@ function viewPassword(){
 
 function addUser(){
 	
-	
-	// $.ajax({
-	// 	type: "POST",
-	// 	url: "account_management.php",
-	// 	data: { "operation": "view_password", "username":username},
-	// 	success: function(data, txt, jqxhr){
-	// 		$("#viewPasswordModal #currentPwd").text(data);
-	// 	}
-	// }).fail(function(xhr, status, error){
-	// 	alert(error);
-	// });
+	// console.log(username+','+pwd+','+priv);
+	$.ajax({
+		type: "POST",
+		url: "update.php",
+		data: { "operation": "insert","target_table":"staff","headerList":["Username","PassWord"],"valueList":[[username,pwd]]},
+		success: function(data, txt, jqxhr){
+		}
+	}).fail(function(xhr, status, error){
+		alert(error);
+	});
+	$.ajax({
+		type: "POST",
+		url: "account_management.php",
+		data: { "operation": "add_user", "username":username, "password":pwd, "privilege":priv},
+		success: function(data, txt, jqxhr){
+			window.location.href = "user-management.php"
+		}
+	}).fail(function(xhr, status, error){
+		alert(error);
+	});
+}
+
+function deleteUser(){
+	console.log('delID:'+delID);
+	$.ajax({
+		type: "POST",
+		url: "update.php",
+		data: { "operation": "delete","target_table":"staff","valueList":[delID],"idName":"StaffID"},
+		success: function(data, txt, jqxhr){
+			// alert(data);
+		}
+	}).fail(function(xhr, status, error){
+		alert(error);
+	});
+	$.ajax({
+		type: "POST",
+		url: "account_management.php",
+		data: { "operation": "delete_user", "username":username },
+		success: function(data, txt, jqxhr){
+			window.location.href = "user-management.php"
+		}
+	}).fail(function(xhr, status, error){
+		alert(error);
+	});
 }
 
 /** dropdown related js **/

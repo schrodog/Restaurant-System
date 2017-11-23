@@ -70,9 +70,14 @@ $.fn.editableTableWidget = function (options) {
 				}
 				// allow edting
 				if (active.length) {
-					if (active.index() == "6"){
+					if (active.index() == "6" || active.index()==7){
 						editorSelect.children('option').remove();
-						var tempOptions = ["Waiter","Waitress","Cook","Cashier","Manager"], selected = false;
+						if (active.index()==6){
+							var tempOptions = ["Waiter","Waitress","Cook","Cashier","Manager"];
+						} else {
+							var tempOptions = ["M","F"];
+						}
+						var selected = false;
 
 						for (var i=0; i<tempOptions.length; i++){
 							if(active.text() === tempOptions[i]){
@@ -89,14 +94,6 @@ $.fn.editableTableWidget = function (options) {
 						.css('width',active.outerWidth())
 						.focus();
 
-						// $(function(){
-						// 	if($.browser.webkit){
-						// 		alert('hi');
-						// 		editor = editorSelect.css('background-color','white');
-						// 	}
-						// });
-
-						// .css(active.css(activeOptions.cloneProperties));
 						bindEvents();
 
 					} else {
@@ -110,11 +107,6 @@ $.fn.editableTableWidget = function (options) {
 						.css('height',active.outerHeight())
 						.css('width',active.outerWidth())
 						.focus();
-
-
-
-						// .width(active.width())
-						// .height(active.height())
 						bindEvents();
 						if (select) {
 							editor.select();

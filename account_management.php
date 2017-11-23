@@ -29,7 +29,7 @@ try {
           FLUSH PRIVILEGES; ";
           $conn->exec($sql);
           
-        } elseif ($privilege=="Admin") {
+        } elseif ($privilege=="Administrator") {
           $sql = "CREATE USER '$username'@'localhost' IDENTIFIED BY '$password';
           GRANT ALL ON *.* TO '$username'@'localhost' WITH GRANT OPTION;
           GRANT CREATE USER ON *.* TO '$username'@'localhost' WITH GRANT OPTION;

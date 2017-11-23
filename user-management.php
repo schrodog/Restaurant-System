@@ -193,11 +193,11 @@ $conn = null;
   <div class="modal-body">
     <div class="modal-item-list">
       <label for="pwd">Please enter username:</label>
-      <input type="text" class="form-control no_focus" id="username" required="true">
+      <input type="text" class="form-control no_focus" id="username">
     </div>
     <div class="modal-item-list">
       <label for="pwd">Please enter password:</label>
-      <input type="text" class="form-control no_focus" id="pwd" required="true">
+      <input type="password" class="form-control no_focus" id="pwd">
     </div>
     <div class="modal-item-list" id="dropdown-group">
     <label for="pwd">Choose privilege type:</label>
