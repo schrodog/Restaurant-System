@@ -1,14 +1,19 @@
 /*global $, window*/
 // for changing td to editable cell
+var hasChangeWord;
 $.fn.editableTableWidget = function (options) {
 	'use strict';
 
 	return $(this).each(function () {
-
+		
 		function bindEvents(){
+			hasChangeWord=0;
 			// event occur when element loses focus
-			editor.blur(function () {
-				setActiveText();
+			editor.one('blur',function () {
+				// console.log('hasChangeWord:'+hasChangeWord);
+				if (hasChangeWord==1){
+					setActiveText();
+				}
 				editor.hide();
 			}).keydown(function (e) { // different operation on cells by keyboard
 				if (e.which === ENTER) {
@@ -35,8 +40,10 @@ $.fn.editableTableWidget = function (options) {
 				}
 			})
 			.on('input paste', function () {
+				hasChangeWord=1;
 				var evt = $.Event('validate');
 				active.trigger(evt, editor.val());
+				// console.log('result:'+evt.result);
 				if (evt.result === false) {
 					editor.addClass('error');
 				} else {
@@ -121,6 +128,9 @@ $.fn.editableTableWidget = function (options) {
 					originalContent;
 				// if the change is invalid, recover original content
 				if (active.text().trim() === text || editor.hasClass('error')) {
+					if (hasChangeWord==1){
+						giveAlert(active);
+					}
 					return true;
 				}
 				originalContent = active.html(); // replace
@@ -195,5 +205,16 @@ $.fn.editableTableWidget.defaultOptions = {
 	// editorSelect: $('<input list="productName">')
 	editorSelect: $('<select>')
 };
-// limitlis/editable-table
-// <select><options value="a">a</options></select>
+
+function giveAlert(cell){
+	var pos = cell.index();
+	// console.log('cell: '+cell.index());
+	if (cell.text()=='') {return;}
+	if (pos=='3' || pos=='5'){
+		alert('Only number is allowed!');
+	} else if (pos=='1' || pos=='2') {
+		alert('Only alphabet and space are allowed!');
+	}
+	
+}
+

@@ -9,6 +9,7 @@ var idChange = [], insertRows=[], deleteRows=[], oldIDs=[], newIDs=[],beforeChan
 var associativeArray = {};
 var currentCell = {};
 var keyID,username,pwd,priv,delID;
+// var originalText;
 
 $.fn.numericInputExample = function () {
 	'use strict';
@@ -22,10 +23,11 @@ $.fn.numericInputExample = function () {
 		var cell = $(this),	column = cell.index();
 		var id = parseInt($(this).parent().find("td").first().text());
 		idChange.push(id);
-		console.log("idchange= "+idChange);
+		// console.log("idchange= "+idChange);
 
 	}).on('validate', function (evt, value) { // validate before change
 		var cell = $(this), column = cell.index();
+		if (value=='') {return;} // allow empty value
 		if (column == 1 || column ==2) { // for column name
 			var re = /^[a-zA-Z ]+$/g;
 			return !!value && value.trim().length > 0 && !!value.match(re);
@@ -35,8 +37,8 @@ $.fn.numericInputExample = function () {
 			return !isNaN(tmp) && tmp<1000;
 		} else if (column == 3) {
 			// return !isNaN(parseFloat(value)) && isFinite(value); 
-			
-			return (value == parseInt(value,10));
+				return (value == parseInt(value,10));
+				// alert('Only integral value is allowed.');
 			
 			// var re = /^[a-zA-Z@_#$%-.]+$/g;
 			// return !!value && value.trim().length > 0 && !!value.match(re);
@@ -47,6 +49,7 @@ $.fn.numericInputExample = function () {
 		}
 	}).on('click', function(){
 		currentCell = element.find('td:focus');
+		// originalText = currentCell.text();
 		// console.log(currentCell.text());
 	});
 
