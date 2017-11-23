@@ -8,6 +8,7 @@ updated = idChange-beforeChange-afterChange
 var idChange = [], insertRows=[], deleteRows=[], oldIDs=[], newIDs=[],beforeChange=[],afterChange=[], element={};
 var associativeArray = {};
 var currentCell = {};
+var keyID,username;
 
 $.fn.numericInputExample = function () {
 	'use strict';
@@ -24,9 +25,7 @@ $.fn.numericInputExample = function () {
 		console.log("idchange= "+idChange);
 
 	}).on('validate', function (evt, value) { // validate before change
-		// console.log("validate");
 		var cell = $(this), column = cell.index();
-		// console.log("validate="+column);
 		if (column === 1 || column===2) { // for column name
 			var re = /^[a-zA-Z ]+$/g;
 			return !!value && value.trim().length > 0 && !!value.match(re);
@@ -144,17 +143,22 @@ $(document).ready(function(){
 	}
 
 	$("#addBtn").click(function(){
-		$.ajax({
-			type: "POST",
-			url: "update.php",
-			data: {"operation": "insertEmpty","target_table":"staff","idName":"staffID"},
-			success: function(data, txt, jqxhr){
-				// alert("You have successfully added.");
-				refreshTable();
-			}
-		}).fail(function(xhr, status, error){
-			alert(error);
+		$("#addUserModal").modal("show");
+		
+		$("addUserModal #OK").click(function(){
+			addUser();
 		});
+		// $.ajax({
+		// 	type: "POST",
+		// 	url: "update.php",
+		// 	data: {"operation": "insertEmpty","target_table":"staff","idName":"staffID"},
+		// 	success: function(data, txt, jqxhr){
+		// 		// alert("You have successfully added.");
+		// 		refreshTable();
+		// 	}
+		// }).fail(function(xhr, status, error){
+		// 	alert(error);
+		// });
 	});
 		// $('#mainTable').editableTableWidget().numericInputExample();
 	// });
@@ -200,33 +204,152 @@ $(document).ready(function(){
 		});
 	});
 
-	/** change password **/
+	/** few operations **/
 	$(".keyBtn").click(function(){
 		// console.log($(this).parent().parent().text());
 		var thisRow = $(this).parent().parent();
 		keyID = thisRow.find("td").first().text();
-		$("#passwordModal").modal('show');
-		$("#passwordModal #pwd").val('');
-		// console.log('keyID:'+keyID);
-		$("#passwordModal #OK").click(function(){
-			var pwd = $("#passwordModal #pwd").val();
-			// console.log("pwd:"+pwd);
-			$.ajax({
-				type: "POST",
-				url: "update.php",
-				data: { "operation": "update","target_table":"staff","idName":"staffID","idList":[keyID],"headerList":["PassWord"],"valueList":[[pwd]]},
-				success: function(data, txt, jqxhr){
-					alert(data);
-					// alert(txt);
-				}
-			}).fail(function(xhr, status, error){
-				alert(error);
-			});
+		username = thisRow.find("td:nth-child(5)").text();
+		
+		$("#accountModal").modal('show');
+		$("#newPwd").click(function(){
+			newPwd();
+		});
+		$("#changeUser").click(function(){
+			changeUser();
+		});
+		$("#viewPwd").click(function(){
+			viewPassword();
 		});
 	});
 	
+	$("#privList a").click(function(){
+		var txt = $(this).text();
+		$(".dropdown #privType").text(txt);
+	});
+	/* leave dropdown when click outside */
+	window.onclick = function(event) {
+		if (!event.target.matches('.dropbtn')) {
+			$(".dropdown-content").hide();
+	}};
 
 });
+
+function newPwd(){
+	$('#accountModal').modal('hide');
+	$("#newPasswordModal").modal('show');
+	$("#newPasswordModal #pwd1").val('');
+	$("#newPasswordModal #pwd2").val('');
+	// console.log('keyID:'+keyID);
+	$("#newPasswordModal #OK").click(function(){
+		var pwd = $("#newPasswordModal #pwd1").val();
+		// var pwd_1 = $("#newPasswordModal #pwd2").val();
+		// if (pwd != pwd_1){
+		// 	alert("Inconsistent passwords. Please re-enter.");
+		// 	$("#newPasswordModal").modal('show');
+		// 	return;
+		// }
+		console.log("pwd:"+pwd);
+		console.log("username:"+username);
+		// update password in staff table
+		$.ajax({
+			type: "POST",
+			url: "update.php",
+			data: { "operation": "update","target_table":"staff","idName":"staffID","idList":[keyID],"headerList":["PassWord"],"valueList":[[pwd]]},
+			success: function(data, txt, jqxhr){
+				alert(data);
+			}
+		}).fail(function(xhr, status, error){
+			alert(error);
+		});
+		// update pwd in mysql account
+		$.ajax({
+			type: "POST",
+			url: "account_management.php",
+			data: { "operation": "change_password", "username":username, "newPwd":pwd},
+			success: function(data, txt, jqxhr){
+				alert(data);
+			}
+		}).fail(function(xhr, status, error){
+			alert(error);
+		});
+	});
+	
+}
+
+function changeUser(){
+	$('#accountModal').modal('hide');
+	$("#changeUserModal").modal('show');
+	$("#changeUserModal #username").val('');
+	// console.log('keyID:'+keyID);
+	
+	$("#changeUserModal #OK").click(function(){
+		var newName = $("#changeUserModal #username").val();
+		// console.log("newName:"+newName);
+		// console.log("oldName:"+username);
+		
+		// change username in staff table
+		$.ajax({
+			type: "POST",
+			url: "update.php",
+			data: { "operation": "update","target_table":"staff","idName":"staffID","idList":[keyID],"headerList":["Username"],"valueList":[[newName]]},
+			success: function(data, txt, jqxhr){
+				// alert(data);
+			}
+		}).fail(function(xhr, status, error){
+			alert(error);
+		});
+		// change username in mysql account
+		$.ajax({
+			type: "POST",
+			url: "account_management.php",
+			data: { "operation": "change_username", "newName":newName, "username":username },
+			success: function(data, txt, jqxhr){
+				// alert(data);
+			}
+		}).fail(function(xhr, status, error){
+			alert(error);
+		});
+		
+	});
+}
+
+function viewPassword(){
+	$('#accountModal').modal('hide');
+	$("#viewPasswordModal").modal('show');
+	$.ajax({
+		type: "POST",
+		url: "account_management.php",
+		data: { "operation": "view_password", "username":username},
+		success: function(data, txt, jqxhr){
+			$("#viewPasswordModal #currentPwd").text(data);
+		}
+	}).fail(function(xhr, status, error){
+		alert(error);
+	});
+}
+
+function addUser(){
+	
+	
+	// $.ajax({
+	// 	type: "POST",
+	// 	url: "account_management.php",
+	// 	data: { "operation": "view_password", "username":username},
+	// 	success: function(data, txt, jqxhr){
+	// 		$("#viewPasswordModal #currentPwd").text(data);
+	// 	}
+	// }).fail(function(xhr, status, error){
+	// 	alert(error);
+	// });
+}
+
+/** dropdown related js **/
+function showDropdown(){
+	$(".dropdown #privList").toggle();
+}
+
+
 
 function GoHome(link){
 	if (idChange.length>0){

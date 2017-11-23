@@ -1,47 +1,62 @@
 <?php
 
-$username = $_POST["username"];
-$password = $_POST["password"];
+$operation = $_POST["operation"];
+if (isset($_POST["username"])){ $username = $_POST["username"]; }
+if (isset($_POST["password"])){ $password = $_POST["password"]; }
+if (isset($_POST["privilege"])){ $privilege = $_POST["privilege"]; }
+if (isset($_POST["newName"])){ $newName = $_POST["newName"]; }
+if (isset($_POST["newPwd"])){ $newPwd = $_POST["newPwd"]; }
 
 $servername="localhost";
-$username = "user1";
-$password = "123456";
-$dbname = "myDBPDO";
+$username1 = "user1";
+$password1 = "123456";
+$dbname = "Restaurant";
 
 try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username1, $password1);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    if ($operation=="update"){
-        $sql = "update MyGuests set firstname=?, lastname=?, email=? where id=?;";
-        $stmt = $conn->prepare($sql);
-        // echo $valueList;
-        foreach ($valueList as $value) {
-            $tmp = $value;
-            $id = array_shift($tmp);
-            array_push($tmp, $id);
-            // print_r($tmp);
-            $stmt->execute($tmp);
-        }
-        echo "successfully updated " . $stmt->rowCount() . " rows";
-
-    } else if ($operation=="insert"){
-        $stmt = $conn->prepare("insert into MyGuests (id, firstname, lastname, email)
-            values (:id, :firstname, :lastname, :email)");
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':firstname', $fn);
-        $stmt->bindParam(':lastname', $ln);
-        $stmt->bindParam(':email', $email);
-
-        foreach ($valueList as $value){
-            $id =  $value[0];
-            $fn = $value[1];
-            $ln = $value[2];
-            $email = $value[3];
-            $stmt->execute();
+    if ($operation=="add_user"){
+        if ($privilege=="User"){
+          $sql="
+          CREATE USER '$username'@'localhost' IDENTIFIED BY '$password';
+          GRANT ALL ON Restaurant.masterorder TO '$username'@'localhost';
+          GRANT SELECT, UPDATE ON Restaurant.menu TO '$username'@'localhost';
+          GRANT ALL ON Restaurant.`order` TO '$username'@'localhost';
+          GRANT ALL ON Restaurant.report TO '$username'@'localhost';
+          GRANT SELECT, UPDATE ON Restaurant.`table` TO '$username'@'localhost';
+          GRANT UPDATE ON Restaurant.staff TO '$username'@'localhost';
+          FLUSH PRIVILEGES; ";
+          $conn->exec($sql);
+          
+        } elseif ($privilege=="Admin") {
+          $sql = "CREATE USER '$username'@'localhost' IDENTIFIED BY '$password';
+          GRANT ALL ON *.* TO '$username'@'localhost' WITH GRANT OPTION;
+          GRANT CREATE USER ON *.* TO '$username'@'localhost' WITH GRANT OPTION;
+          FLUSH PRIVILEGES;";
+          $conn->exec($sql);
         }
 
-        echo "success insert";
+    } 
+    elseif ($operation=="delete_user"){
+        $sql = "DROP USER '$username'@'localhost'; FLUSH PRIVILEGES;";
+        $conn->exec($sql);
+    } 
+    elseif ($operation=="change_username") {
+      $sql = "UPDATE mysql.user SET user='$newName' where user='$username';";
+      $conn->exec($sql);
+    } 
+    elseif ($operation=="change_password") {
+      $sql = "set password for '$username'@'localhost'= '$newPwd'; ";
+      $conn->exec($sql);
+    } 
+    elseif ($operation=="view_password") {
+      $sql = "SELECT PassWord from staff where UserName='$username'; ";
+      $stmt = $conn->prepare($sql);
+      $stmt->execute();
+      $stmt->setFetchMode(PDO::FETCH_ASSOC);
+      $result=(($stmt->fetchAll())[0])['PassWord'];
+      echo $result;
     }
 
 } catch (PDOException $e){
@@ -51,34 +66,4 @@ $conn = null;
 
 
 ?>
-
-
-<!-- set password for 'user13'@'localhost'='456'; -->
-
-<!-- change password
-$sql = "set password for '$targetUser'@'localhost' = '$newpwd';"; -->
-
-<!-- NEW user
-for staff
-CREATE USER 'user2'@'localhost' IDENTIFIED BY '123';
-GRANT SELECT, UPDATE ON Restaurant.masterorder TO 'user2'@'localhost';
-GRANT SELECT, UPDATE ON Restaurant.menu TO 'user2'@'localhost';
-GRANT SELECT, UPDATE ON Restaurant.`order` TO 'user2'@'localhost';
-GRANT SELECT ON Restaurant.report TO 'user2'@'localhost';
-GRANT SELECT, UPDATE ON Restaurant.`table` TO 'user2'@'localhost';
-GRANT UPDATE ON Restaurant.staff TO 'user2'@'localhost';
-GRANT UPDATE ON mysql.user TO 'user2'@'localhost';
-FLUSH PRIVILEGES; -->
-
-<!-- for administrator
-CREATE USER 'user_admin1'@'localhost' IDENTIFIED BY '123';
-GRANT ALL ON *.* TO 'user_admin1'@'localhost' WITH GRANT OPTION;
-GRANT CREATE USER ON *.* TO 'user_admin1'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES; -->
-
-<!-- delete user
-DROP USER 'user11'@'localhost';
-FLUSH PRIVILEGES;
--->
-<!-- GRANT UPDATE ON mysql.user TO 'user12'@'localhost'; -->
 

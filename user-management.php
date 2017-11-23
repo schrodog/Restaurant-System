@@ -60,7 +60,7 @@ class TableRows extends RecursiveIteratorIterator {
         parent::__construct($it, self::LEAVES_ONLY);
     }
     function current(){
-        if (self::$index==0){
+        if (self::$index==0 or self::$index==4){
           $str = "<td class='no_focus'>";
         } else {
           $str = "<td>";
@@ -117,42 +117,102 @@ $conn = null;
     </div>
 </footer>
 
-<div id="deleteModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Warning</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure to delete this row?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="OK" data-dismiss="modal">OK</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-      </div>
-    </div>
+<div id="deleteModal" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">Warning</h4>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
   </div>
-</div>
+  <div class="modal-body">
+    <p>Are you sure to delete this row?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" id="OK" data-dismiss="modal">OK</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+  </div>
+</div></div></div>
 
-<div id="passwordModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">New Password</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <label for="pwd">Please enter new password:</label>
-        <input type="password" class="form-control no_focus" id="pwd">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="OK" data-dismiss="modal">OK</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-      </div>
-    </div>
+<div id="accountModal" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">Manage Account</h4>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
   </div>
-</div>
+  <div class="modal-body">
+    <button type="button" class="btn btn-default" data-dismiss="modal" id="newPwd">New Password</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal" id="changeUser">Change Username</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal" id="viewPwd">View password</button>
+  </div>
+</div></div></div>
+
+<div id="newPasswordModal" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">New Password</h4>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+  </div>
+  <div class="modal-body">
+    <label for="pwd">Please enter new password:</label>
+    <input type="password" class="form-control no_focus" id="pwd1">
+    <!-- <label for="pwd">Re-enter new password:</label>
+    <input type="password" class="form-control no_focus" id="pwd2"> -->
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" id="OK" data-dismiss="modal">OK</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+  </div>
+</div></div></div>
+
+<div id="viewPasswordModal" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">Current Password</h4>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+  </div>
+  <div class="modal-body">
+    <p id="currentPwd" style="font-size: 20px"></p>
+  </div>
+</div></div></div>
+
+<div id="changeUserModal" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">Change Username</h4>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+  </div>
+  <div class="modal-body">
+    <label for="pwd">Please enter new username:</label>
+    <input type="text" class="form-control no_focus" id="username">
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" id="OK" data-dismiss="modal">OK</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+  </div>
+</div></div></div>
+
+<div id="addUserModal" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">Add User</h4>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-item-list">
+      <label for="pwd">Please enter username:</label>
+      <input type="text" class="form-control no_focus" id="username" required="true">
+    </div>
+    <div class="modal-item-list">
+      <label for="pwd">Please enter password:</label>
+      <input type="text" class="form-control no_focus" id="pwd" required="true">
+    </div>
+    <div class="modal-item-list" id="dropdown-group">
+    <label for="pwd">Choose privilege type:</label>
+    <div class="dropdown">
+     <button onclick="showDropdown()" class="dropbtn dropdown-toggle btn btn-primary" id="privType">User</button>
+     <div id="privList" class="dropdown-content">
+       <a>User</a><a>Administrator</a>
+     </div>
+   </div></div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" id="OK" data-dismiss="modal">OK</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+  </div>
+</div></div></div>
 
 <script>
 $('#mainTable').editableTableWidget().numericInputExample();
