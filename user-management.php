@@ -8,16 +8,16 @@
 
     <title>Restaurant System</title>
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="user-man.css" rel="stylesheet" type="text/css" />
+    <link href="custom_css/user-management.css" rel="stylesheet" type="text/css" />
 
     <script src="lib/jquery-3.2.1.min.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script> -->
     <!-- <script src="lib/bootstrap.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <script src="user-man-editabletable.js"></script>
-    <script src="user-man-input.js"></script>
-    <script src="table-sort.js"></script>
+    <script src="js/user-management-editabletable.js"></script>
+    <script src="js/user-management-input.js"></script>
+    <script src="tools/table-sort.js"></script>
 
 </head>
 
@@ -176,7 +176,7 @@ $conn = null;
     <button type="button" class="close" data-dismiss="modal">&times;</button>
   </div>
   <div class="modal-body">
-    <label for="pwd">Please enter new username:</label>
+    <label>Please enter new username:</label>
     <input type="text" class="form-control no_focus" id="username">
   </div>
   <div class="modal-footer">
@@ -192,7 +192,7 @@ $conn = null;
   </div>
   <div class="modal-body">
     <div class="modal-item-list">
-      <label for="pwd">Please enter username:</label>
+      <label>Please enter username:</label>
       <input type="text" class="form-control no_focus" id="username">
     </div>
     <div class="modal-item-list">
@@ -200,7 +200,7 @@ $conn = null;
       <input type="password" class="form-control no_focus" id="pwd">
     </div>
     <div class="modal-item-list" id="dropdown-group">
-    <label for="pwd">Choose privilege type:</label>
+    <label>Choose privilege type:</label>
     <div class="dropdown">
      <button onclick="showDropdown()" class="dropbtn dropdown-toggle btn btn-primary" id="privType">User</button>
      <div id="privList" class="dropdown-content">

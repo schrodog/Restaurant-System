@@ -3,6 +3,7 @@
 var hasChangeWord;
 $.fn.editableTableWidget = function (options) {
 	'use strict';
+	// console.log('start-table');
 
 	return $(this).each(function () {
 

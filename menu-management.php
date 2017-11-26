@@ -1,5 +1,4 @@
 <?php
-// Starting session
 session_start();
 ?>
 <!DOCTYPE html>
@@ -11,25 +10,22 @@ session_start();
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Order System</title>
+  <title>Menu Management</title>
 
   <!-- Bootstrap core CSS -->
   <script src="lib/jquery-3.2.1.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!-- Custom styles for this template -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
-  <!-- <link href="user-man.css" rel="stylesheet" type="text/css" /> -->
   <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-  <!-- <script src="jquery.dataTables.min.js"></script> -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="js/menu-management-editableTable.js"></script>
-  <script src="js/menu-management-input.js"></script>
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
   <script src="js/table-sort.js"></script>
-  <link href="menu-management.css" rel="stylesheet" type="text/css" />
+  <link href="custom_css/menu-management.css" rel="stylesheet" type="text/css" />
 </head>
 
 
-<body data-spy="scroll" data-target="#myScrollspy" data-offset="15">
+<body>
   <!-- Navigation -->
 
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -42,149 +38,182 @@ session_start();
   <!-- Page Content -->
   <div class="container-fluid">
     <!-- Menu table -->
-    <br><br>
+    <br>
+    <div class="search-block">
+      <input type="text" id="searchCode" placeholder="Food Code" class="no_focus">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </div>
 
     <div class="row justify-content-md-center" id="right-part">  <!--   justify-content-md-center -->
-      <!-- <div class="col-6"> -->
-        <table class="table table-dark table-hover">
-          <thead>
-            <tr>
-              <th>Code</th>
-              <th>Food Name</th>
-              <th>Price ($)</th>
-              <th>Quantity</th>
-              <th class="test">Category</th>
-            </tr>
-          </thead>
-          <tbody id="menu">
-            <?php
+      
+         <table id="mainTable" class="table table-striped">
+             <thead><tr>
+               <th onclick="columnSort(0)" value="0">Code</th>
+                <th onclick="columnSort(1)" value="0">Food Name</th>
+                <th onclick="columnSort(2)" value="0">Price</th>
+                <th onclick="columnSort(3)" value="0">Quantity</th>
+                <th onclick="columnSort(4)" value="0">Category</th>
+                <th></th>
+            </tr></thead>
+            <tbody>
+      <?php
 
-            $servername = "localhost";
-            $username = "user1";
-            $password = "123456";
-            $dbname = "Restaurant";
-
-            // Create connection
-            $conn = new mysqli($servername,$username,$password,$dbname);
-            // Check connection
-            if ($conn->connect_error) {
-              die("Connection failed: " . $conn->connect_error);
+        class TableRows extends RecursiveIteratorIterator {
+            private static $index=0;
+            function __construct($it){
+                parent::__construct($it, self::LEAVES_ONLY);
             }
+            function current(){
+                if (self::$index==0){
+                  $str = "<td class='no_focus'>";
+                } else {
+                  $str = "<td>";
+                }
+                self::$index++;
+                return $str.parent::current()."</td>";
+            }
+            function beginChildren(){
+                self::$index=0;
+                echo "<tr>";
+            }
+            function endChildren(){
+                echo "<td class='no_focus'><button type='button' class='delBtn btn' style='background-color:transparent'><img src='icon/delete.png'></button></td></tr>\n";
+                //style='background-color:transparent' <img src='icon/key.png'/>
+            }
+        }
 
-            $sql = "SELECT FoodID, FoodName, Price, Quantity, Category FROM menu";
-            $result = $conn->query($sql);
+        $servername="localhost";
+        $username = "user1";
+        $password = "123456";
+        $dbname = "Restaurant";
 
-            if ($result->num_rows > 0) {
-              // output data of each row
-              while($row = $result->fetch_assoc()) {
-                echo '<tr> <td>'.$row['FoodID'].'</td><td>'.$row["FoodName"].'</td><td>'.$row["Price"].'</td><td>'.$row["Quantity"].'</td><td>'.$row["Category"].'</td></tr>';
-              }
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            if (!isset($_SESSION["Category"])){
+              $filter_category = "Burger";
             } else {
-              echo "0 results";
+              $filter_category = $_SESSION["Category"];
             }
-            $conn->close();
-            ?>
+            $sql = "select FoodID, FoodName, Price, Quantity, Category from `menu` where Category='$filter_category'";
 
-          </tbody>
-        </table>
-      <!-- </div> -->
-    </div>
+            // echo $sql;
+            
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();  
+            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC); // return associated array
+            // create html table
+            foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll() )) as $k=>$v){
+                echo $v;
+            }
+
+        } catch (PDOException $e){
+            echo $e->getMessage();
+        }
+        $conn = null;
+
+      ?>
+              </tbody></table>
+
+      </div> <!-- end right-part -->
+
+
 
     <div id="type-navigation">
-      <div class="row">
-        <!-- <div class="col"> -->
-          <a class="btn btn-primary" id="button1"><p >Burger</p></a>
-        <!-- </div> -->
-        <!-- <div class="col"> -->
-          <a class="btn btn-primary" id="button2"><p >Pizza</p></a>
-        <!-- </div> -->
-        <!-- <div class="col"> -->
-          <a class="btn btn-primary" id="button3"><p >Chicken</p></a>
-        <!-- </div> -->
-        <!-- <div class="col"> -->
-          <a class="btn btn-primary" id="button4"><p >Sides</p></a>
-        <!-- </div> -->
-        <!-- <div class="col"> -->
-          <a class="btn btn-primary" id="button5"><p >Drinks</p></a>
-        <!-- </div> -->
-        <!-- <div class="col"> -->
-          <a class="btn btn-primary" id="button6"><p >Dessert</p></a>
-        <!-- </div> -->
+      <!-- <div class="row"> -->
+        <div id="typeBtnList"></div>
+        <!-- <a class="btn btn-primary" id="button1"><p >Burger</p></a>
       </div>
+    </div> -->
     </div>
+</div>
 
-    <!-- Order List -->
-    <div class="row" id="orderBlock">
-      <!-- <div class="col-lg-6"> -->
-        <div class="card" id="order-list">
-          <div class="card-header"><h4>Order List</h4></div>
-          <!-- Insert ordered items -->
-          <form class="form-inline" action="./action.php" method="POST">
-            <div class="card-block">
-              <input type="tableID" class="form-control" type="text" placeholder="Table No." name="tableid" required >
-              <!--<input type="hidden" name="foodid"/>-->
-              <input type="hidden" name="foodname"/>
-              <input type="hidden" name="price"/>
-            </div>
-
-            <div class="card-footer">
-              <div class="text-muted"><h4>Total</h4></div>
-              <div id="total"></div>
-            </div>
-
-          </div>
-          <input type= "submit" class="btn btn-info" name="save" value="save"></a>
-        </form>
-      <!-- </div> -->
+<footer class="footer">
+    <div class="container">
+        <button class="btn btn-info" id="addBtn">New Food</button>
+        <button type="button" class="btn btn-primary" id="updateBtn">Update</button>
     </div>
+</footer>
 
+<div id="newFoodModal" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">New Food</h4>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
   </div>
+  <div class="modal-body">
+    <div class="modal-item-list">
+      <label>New food code*:</label>
+      <input type="text" class="form-control no_focus" id="foodCode">
+    </div>
+    <div class="modal-item-list">
+      <label>Enter food name:</label>
+      <input type="text" class="form-control no_focus" id="foodName">
+    </div>
+    <div class="modal-item-list">
+      <label>Enter price:</label>
+      <input type="text" class="form-control no_focus" id="price">
+    </div>
+    <div class="modal-item-list">
+      <label>Enter quantity:</label>
+      <input type="text" class="form-control no_focus" id="quantity">
+    </div>
+    <div class="modal-item-list">
+      <label>Enter category:</label>
+      <input type="text" class="form-control no_focus" id="category">
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" id="OK" data-dismiss="modal">OK</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+  </div>
+</div></div></div>
 
-  <script>
-  //Search bar AND Side bar
-  $(document).ready(function () {
-    var table = $('.table').DataTable();
-    $('#button1').on('click',function(){
-      table.search("Burger").draw();
-    });
-    $('#button2').on('click',function(){
-      table.search("Pizza").draw();
-    });
-    $('#button3').on('click',function(){
-      table.search("Chicken").draw();
-    });
-    $('#button4').on('click',function(){
-      table.search("Sides").draw();
-    });
-    $('#button5').on('click',function(){
-      table.search("Drinks").draw();
-    });
-    $('#button6').on('click',function(){
-      table.search("Dessert").draw();
-    });
+<div id="deleteModal" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">Delete row</h4>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-item-list">
+      <p>Are you sure to delete this row?</p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" id="OK" data-dismiss="modal">OK</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+  </div>
+</div></div></div>
+
+
+<script>
+function refresh_buttons(){
+  $.ajax({
+    type     : "POST",
+    url      : "tools/select_category.php",
+    success  : function(data) {
+      set_buttons(JSON.parse(data));
+    }
+  }).fail(function(xhr, status, error){
+  	alert(error);
   });
 
-  //Mini-order summary
-  $("#menu tr").click(function() {
-    var tableData = $(this).children("td").map(function() {
-      return $(this).text();
-    }).get();
-    // console.log(tableData);
-    $('#order-list .card-block').append('<p class="row" name="'+ '" id="summary"></p>')+
-    $('#order-list .card-block p:last-child').append('<span class="col-6" name="foodname"> ' + tableData[1]+
-    '</span><br /><input class="col" name="foodid[]" value='+ tableData[0]+'>' +
-    '<input class="col" name="price" class="price-order" value='+ Number(tableData[2])+'>');
-    var sum = 0;
-
-    $(".card-block").find("input[name ='price']").each(function(){
-      sum += Number($(this).val());
-      $('#total').text('$' + sum.toFixed(2));
+  function set_buttons(data){
+    $("#typeBtnList").empty();
+    data.forEach(function(row){
+      row.forEach(function(value){
+        // var str = "'"+value+"'";
+        // $("#typeBtnList").append('<button class="btn btn-primary type-btn" onclick="changeType('+str+')"><p>'+value+'</p></button>');
+        $("#typeBtnList").append('<button class="btn btn-primary type-btn" ><p>'+value+'</p></button>');
+      });
     });
-    console.log('sum: ' + sum);
+  }
+}
+refresh_buttons();
+</script>
+<script src="js/menu-management-input.js"></script>
+<script src="js/menu-management-editableTable.js"></script>
 
-  });
+<script>$('#mainTable').editableTableWidget().numericInputExample();</script>
 
-
-  </script>
 </body>
 </html>

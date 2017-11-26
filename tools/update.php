@@ -60,7 +60,7 @@ try {
 
     else if ($operation == "delete"){
         $values = implode(", ", $valueList);
-        $sql = "delete from `$target_table` where $idName in ($values)";
+        $sql = "delete from `$target_table` where $idName in ('$values')";
         $conn->exec($sql);
         echo $sql;
         // echo $valueList." deleted successfully";
