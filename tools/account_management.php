@@ -21,14 +21,14 @@ try {
           $sql="
           CREATE USER '$username'@'localhost' IDENTIFIED BY '$password';
           GRANT ALL ON Restaurant.masterorder TO '$username'@'localhost';
-          GRANT SELECT, UPDATE ON Restaurant.menu TO '$username'@'localhost';
+          GRANT SELECT, UPDATE(quantity) ON Restaurant.menu TO '$username'@'localhost';
           GRANT ALL ON Restaurant.`order` TO '$username'@'localhost';
           GRANT ALL ON Restaurant.report TO '$username'@'localhost';
-          GRANT SELECT, UPDATE ON Restaurant.`table` TO '$username'@'localhost';
-          GRANT UPDATE ON Restaurant.staff TO '$username'@'localhost';
+          GRANT SELECT, UPDATE(Available) ON Restaurant.`table` TO '$username'@'localhost';
+          GRANT SELECT(StaffID,password), UPDATE(PassWord) ON Restaurant.staff TO '$username'@'localhost';
           FLUSH PRIVILEGES; ";
           $conn->exec($sql);
-          
+
         } elseif ($privilege=="Administrator") {
           $sql = "CREATE USER '$username'@'localhost' IDENTIFIED BY '$password';
           GRANT ALL ON *.* TO '$username'@'localhost' WITH GRANT OPTION;
@@ -37,19 +37,19 @@ try {
           $conn->exec($sql);
         }
 
-    } 
+    }
     elseif ($operation=="delete_user"){
         $sql = "DROP USER '$username'@'localhost'; FLUSH PRIVILEGES;";
         $conn->exec($sql);
-    } 
+    }
     elseif ($operation=="change_username") {
       $sql = "UPDATE mysql.user SET user='$newName' where user='$username';";
       $conn->exec($sql);
-    } 
+    }
     elseif ($operation=="change_password") {
       $sql = "set password for '$username'@'localhost'= '$newPwd'; ";
       $conn->exec($sql);
-    } 
+    }
     elseif ($operation=="view_password") {
       $sql = "SELECT PassWord from staff where UserName='$username'; ";
       $stmt = $conn->prepare($sql);
