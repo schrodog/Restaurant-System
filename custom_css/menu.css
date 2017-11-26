@@ -1,0 +1,145 @@
+nav {
+	height: 70px;
+}
+.btn-info {
+			width:100%;
+}
+.icon-bar {
+				 width: 100px;
+				 background-color: #555;
+}
+.icon-bar a {
+		display: block;
+		text-align: center;
+		transition: all 0.3s ease;
+		color: white;
+		font-size: 40px;
+}
+
+.title {
+		padding-left:20px;
+		color:white;
+		font-size:40px;
+		margin: 0 auto;
+		font-weight: 600;
+		padding-top: 15px;
+}
+
+#type-navigation .btn-primary {
+		margin:0 0 0 5px;
+		width: 10%;
+		padding: 0px;
+		border-radius: 30px;
+		color: #333;
+		background-color: #d3d3d3;
+		border-color: #adadad;
+		float: right;
+		cursor: pointer;
+}
+#type-navigation .btn-primary p {
+	font-size: 22px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+#type-navigation {
+	position: absolute;
+	top: 100px;
+	width: 100%;
+	padding-right: 7%;
+}
+
+#type-navigation .row{
+	/*display: inline-block;*/
+	/*margin-top: 0;
+	margin-bottom: 0;*/
+	/*padding: 0;*/
+}
+
+
+
+
+.container-fluid{
+		padding-top:0%;
+		padding-left:2%;
+		padding-right:2%;
+}
+
+.table{
+		 width: 95%;
+		/*position: absolute;*/
+		font-size:20px;
+}
+
+
+@media (min-width: 992px) {
+	#right-part {
+			/*width: 80%;*/
+			/*margin-left: 30%;
+			margin-right: 20%;*/
+	}
+}
+
+body {
+	padding-top: 56px;
+}
+/*@media (max-width: 992px) {
+	#type-navigation .btn-primary {
+		width: 90%;
+	}
+}*/
+
+#right-part {
+	/*width: 80%;*/
+	/*position: absolute;*/
+	margin-left: 30%;
+	margin-top: 80px;
+	max-width: 900px;
+	/*margin-right: -10%;*/
+	padding: 0;
+	/*padding-right: -30px;*/
+}
+
+
+
+.dataTables_wrapper {
+	/*margin-right: 10%;*/
+}
+.row {
+	display: block;
+}
+
+#DataTables_Table_0_length, #DataTables_Table_0_filter {
+	display: inline-block;
+	margin-bottom: 10px;
+	/*top: 180px;*/
+}
+#DataTables_Table_0_length {
+	width: 40%;
+}
+#DataTables_Table_0_filter {
+	width: 60%;
+}
+#DataTables_Table_0_previous, #DataTables_Table_0_paginate span a {
+	padding-right: 5px;
+	cursor: pointer;
+}
+
+#summary input{
+	display: inline-block;
+	margin-left: 15px;
+}
+#summary input[name='foodid[]'] {
+	width: 40%;
+}
+#summary input[name='price'] {
+	width: 30%;
+}
+
+#orderBlock {
+	position: absolute;
+	margin-right: 70%;
+	top: 180px;
+	max-width: 320px;
+}
+
+

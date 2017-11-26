@@ -1,0 +1,230 @@
+td:focus:not(.no_focus):not(.error) {
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7ab5d3;
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7ab5d3;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7ab5d3;
+	outline: rgb(91, 157, 217) auto 5px;
+}
+input.error {
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px red;
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px red;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px red;
+	outline: thin auto red;
+}
+input:not(.no_focus):not(.error) {
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7ab5d3;
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7ab5d3;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7ab5d3;
+	outline: rgb(91, 157, 217) auto 5px;
+	outline-offset: 0px;
+	border: none;
+}
+
+h2 {
+	margin-top: 90px;
+	width: 100%;
+	text-align: center;
+}
+
+/*#mainTable thead th, #mainTable tbody td {
+  width: 25%;
+}*/
+#mainTable td + td, #mainTable th + th {
+	text-align: right;
+}
+#mainTable th {
+	cursor: pointer;
+}
+#mainTable td {
+	vertical-align: middle;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+#mainTable td button {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+#mainTable td button img{
+	padding-left: 0;
+	padding-right: 0;
+}
+
+select {
+	background-color: white;
+	border: none;
+	text-align: right;
+}
+
+.search-block {
+	float: right;
+	padding: 5px 70px 5px 0;
+}
+
+#mainTable {
+	margin-bottom: 70px;
+}
+
+#deleteBtn {
+	margin: 0px;
+	padding: 0px;
+}
+#updateBtn {
+	margin-left: 20px;
+}
+
+header nav > button {
+  margin-left: 30px;
+}
+
+body > .container {
+  padding: 20px 15px 0;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+}
+
+footer > .container {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.modal-content .modal-item-list {
+	padding: 5px 5px;
+}
+.modal-content #dropdown-group {
+	margin-top: 3px;
+}
+.modal-content #privType {
+	margin-left: 12px;
+}
+
+
+.dropbtn {
+   padding: 4px 6px;
+   cursor: pointer;
+}
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+   position: relative;
+   display: inline-block;
+}
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+   display: none;
+   position: absolute;
+   background-color: #f9f9f9;
+   min-width: 120px;
+   max-height: 320px;
+   overflow: auto;
+   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+   z-index: 1;
+}
+/* Links inside the dropdown */
+.dropdown-content a {
+   color: black;
+   padding: 5px 5px;
+   text-decoration: none;
+   display: block;
+   border-style: solid;
+   border-width: 0.5px;
+   border-color: #eee;
+   text-align: center;
+   user-select: none;
+   cursor: pointer;
+}
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+nav {
+	height: 70px;
+}
+footer .btn {
+	width: 20%;
+	float: right;
+	margin: 10px 0 10px 40px;
+}
+#updateBtn {
+	margin-left: 50px;
+}
+.icon-bar {
+				 width: 100px;
+				 background-color: #555;
+}
+.icon-bar a {
+		display: block;
+		text-align: center;
+		transition: all 0.3s ease;
+		color: white;
+		font-size: 40px;
+}
+
+.title {
+		padding-left:20px;
+		color:white;
+		font-size:40px;
+		margin: 0 auto;
+		font-weight: 600;
+		padding-top: 15px;
+}
+
+#type-navigation .btn-primary {
+		margin: 10px 3px;
+		width: 120%;
+		padding: 0px;
+		border-radius: 30px;
+		color: #333;
+		background-color: #d3d3d3;
+		border-color: #adadad;
+}
+#type-navigation .btn-primary p {
+	font-size: 25px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+#type-navigation {
+	position: absolute;
+	top: 0px;
+	margin-right: 85%;
+	line-height: 30;
+}
+
+#type-navigation .row{
+}
+#type-navigation #typeBtnList {
+	display: inline-grid;
+	width: 100%;
+}
+
+.container-fluid{
+		padding-top:0%;
+		padding-left:2%;
+		padding-right:2%;
+}
+
+.table{
+	 width: 95%;
+	font-size:20px;
+}
+
+body {
+	padding-top: 56px;
+}
+
+#right-part {
+	/*width: 80%;*/
+	/*position: absolute;*/
+	margin-left: 15%;
+	margin-top: 60px;
+	max-width: 900px;
+	/*margin-right: -10%;*/
+	padding: 0;
+	/*padding-right: -30px;*/
+}
+
+

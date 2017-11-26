@@ -30,10 +30,12 @@ function columnSort(n){
     while(switching){
         switching = false;
         rows = $("#mainTable tbody tr");
+        // console.log(rows);
         for (i=0; i<(rows.length-1) ; i++ ){
             shouldSwitch = false;
             x = rows[i].getElementsByTagName("td")[n];
             y = rows[i+1].getElementsByTagName("td")[n];
+            // console.log(x+","+y);
             if (isNumber(x.innerHTML)){
               if ( (dir=="asc" && parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) || (dir=="desc" && parseFloat(x.innerHTML) < parseFloat(y.innerHTML)) ){
                   shouldSwitch = true;
