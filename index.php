@@ -11,7 +11,9 @@
     <link href="custom_css/index.css" rel="stylesheet">
     <script src="lib/jquery-3.2.1.min.js"></script>
     <!-- <script src="index.js"></script> -->
-    
+    <!-- <script type="text/javascript">
+      $("#")
+    </script> -->
 </head>
 
 <body>
@@ -32,7 +34,10 @@
 
 </div>
 
+<?php 
 
+// echo $_SERVER["SERVER_ADDR"];
+?>
 
 </body>
 </html>

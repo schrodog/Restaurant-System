@@ -83,13 +83,13 @@
       <div class="row">
         <div class="col-lg-12 text-center">
 	          <br><br>
-            <a class="btn btn-primary btn-lg btn-block" ><h1 class="my-5">Edit user</h1></a>
+            <a class="btn btn-primary btn-lg btn-block" href="user-management.php"><h1 class="my-5">Edit user</h1></a>
             <br><br><br>
          
-            <a class="btn btn-primary btn-lg btn-block" ><h1 class="my-5">Edit menu</h1></a>
+            <a class="btn btn-primary btn-lg btn-block" href="menu-management.php"><h1 class="my-5">Edit menu</h1></a>
             <br><br><br>
             
-            <a class="btn btn-primary btn-lg btn-block" ><h1 class="my-5">Edit tables</h1></a>
+            <a class="btn btn-primary btn-lg btn-block" href="table-management.php"><h1 class="my-5">Edit tables</h1></a>
           </ul>
         </div>
       </div>

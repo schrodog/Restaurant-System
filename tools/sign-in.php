@@ -3,7 +3,7 @@ session_start();
 $_SESSION["Username"] = $_POST["inputName"];
 $_SESSION["Password"] = $_POST["inputPassword"];
 
-$servername="localhost";
+$servername='localhost';
 $username = $_POST["inputName"];
 $password = $_POST["inputPassword"];
 $dbname = "Restaurant";

@@ -38,8 +38,16 @@
   </nav>
 </header>
 <?php
-$dateRange = $_GET["dr"];
-$operation = $_GET["op"];
+if (isset($_GET["dr"])) {
+  $dateRange = $_GET["dr"];
+} else {
+  $dateRange = array(2017,10,1,2017,12,1);
+}
+if (isset($_GET["op"])){
+  $operation = $_GET["op"];
+} else {
+  $operation = "1";
+}
 if ($operation=="1"){
   echo "<h2>Daily Report</h2>";
 } elseif ($operation=="2"){
