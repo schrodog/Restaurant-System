@@ -1,0 +1,105 @@
+.btn-primary {
+  width:200px;
+  color: #333;
+  background-color: #d3d3d3;
+  border-color: #adadad;
+  border-radius: 30px;
+}
+
+nav {
+  height: 70px;
+}
+.icon-bar {
+  width: 80px;
+  background-color: #555;
+  margin-right: 35px;
+}
+.icon-bar a {
+  display: block;
+  text-align: center;
+  transition: all 0.3s ease;
+  color: white;
+  font-size: 40px;
+}
+button {
+  cursor: pointer;
+}
+
+.title {
+  padding-left:20px;
+  color:white;
+  font-size:40px;
+  margin: 0 auto;
+  font-weight: 600;
+  padding-top: 15px;
+}
+
+.top-info {
+  display: inline-block;
+  width: 40%;
+  margin: auto;
+}
+
+body {
+  margin-top: 50px
+}
+
+.container-fluid{
+  padding-top:3%;
+  padding-left:6%;
+  max-width: 1019px;
+}
+.btn_container {
+  width: 60px;
+}
+.delBtn {
+  padding: 0;
+  cursor: pointer;
+}
+
+
+
+.total-calc {
+  float: right;
+  display: inline-flex;
+  padding-right: 10%;
+}
+.total-calc h4 {
+  padding-right: 20px;
+}
+
+.change-group{
+  margin-top: 50px;
+  display: inline-flex;
+  padding: 10px;
+}
+.change-group .form-group {
+  width: 350px;
+  display: inline-flex;
+}
+.change-group .form-group h4 {
+  padding-right: 20px;
+}
+.change-group .form-group input {
+  width: 150px;
+}
+
+.table{
+  width: 100%;
+  font-size:22px;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}
+
+.btn-list {
+  margin-top: 30px;
+  padding-left: 10px;
+}
+.btn-list a p {
+  font-size: 20px;
+  margin: 5px 0;
+}

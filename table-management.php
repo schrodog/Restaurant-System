@@ -1,7 +1,7 @@
 <?php
 session_start();
-$privilege = "Administrator";
-// $privilege = "User";
+// $privilege = "Administrator";
+$privilege = "User";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,10 +26,11 @@ $privilege = "Administrator";
   <link href="custom_css/table-management.css" rel="stylesheet" type="text/css" />
 
 <?php
-if ($privilege=="Users") {
+if ($privilege=="User") {
   echo "<style>
-  #mainTable tr {
+  #mainTable tr{
     cursor: pointer;
+    line-height: 2.2;
   }</style>";
 }
 ?>

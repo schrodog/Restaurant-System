@@ -127,12 +127,19 @@ body {
 #summary input{
 	display: inline-block;
 	margin-left: 15px;
+	padding: 0 3px;
+	height: 34px;
 }
 #summary input[name='foodid[]'] {
-	width: 40%;
-}
-#summary input[name='price'] {
+	min-width: 80px;
 	width: 30%;
+}
+#summary input[name='quantity'] {
+	min-width: 80px;
+	width: 25%;
+}
+#summary span[name='price'] {
+	font-size: 18px;
 }
 
 #orderBlock {
@@ -141,5 +148,23 @@ body {
 	top: 180px;
 	max-width: 320px;
 }
+#orderBlock .summary-group {
+	width: 100%;
+}
+.card-block {
+	width: 100%;
+}
+#orderBlock #total {
+	font-size: 20px;
+}
+#orderBlock .text-muted {
+	margin-right: 40px;
+}
+#orderBlock .card-footer {
+	width: 100%;
+	display: inline-flex;
+	padding: 5px 10px;
+}
+
 
 

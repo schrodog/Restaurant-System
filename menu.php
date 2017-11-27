@@ -39,7 +39,7 @@ session_start();
     <br><br>
 
     <div class="row justify-content-md-center" id="right-part">
-        <table class="table table-dark table-hover">
+        <table class="table table-dark table-hover" id="mainTable">
           <thead>
             <tr>
               <th>Code</th>
@@ -64,7 +64,13 @@ session_start();
               die("Connection failed: " . $conn->connect_error);
             }
 
-            $sql = "SELECT FoodID, FoodName, Price, Quantity, Category FROM menu";
+            if (isset($_SESSION["Category"])) {
+              $category = $_SESSION["Category"];
+            } else {
+              $category = 'Burger';
+            }
+
+            $sql = "SELECT FoodID, FoodName, Price, Quantity, Category FROM menu where category='$category'";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
@@ -99,11 +105,14 @@ session_start();
           <div class="card-header"><h4>Order List</h4></div>
           <form class="form-inline" action="./action.php" method="POST">
             <div class="card-block">
-              <input type="tableID" class="form-control" type="text" placeholder="Table No." name="tableid" required >
+              <?php
+              echo '<p type="tableID" name="tableid">Table No: '.$_SESSION["TableNo"].'</p>';
+               ?>
               <input type="hidden" name="foodname"/>
-              <input type="hidden" name="price"/>
+              <input type="hidden" name="quantity"/>
+              <input type="hidden" name="price" readonly/>
             </div>
-
+            <br>
             <div class="card-footer">
               <div class="text-muted"><h4>Total</h4></div>
               <div id="total"></div>
@@ -116,75 +125,40 @@ session_start();
 
   </div>
 
-  <script>
-  //Search bar AND Side bar
-  $(document).ready(function () {
-    var table = $('.table').DataTable();
-  });
-  //   $('#button1').on('click',function(){
-  //     table.search("Burger").draw();
-  //   });
-  //   $('#button2').on('click',function(){
-  //     table.search("Pizza").draw();
-  //   });
-  //   $('#button3').on('click',function(){
-  //     table.search("Chicken").draw();
-  //   });
-  //   $('#button4').on('click',function(){
-  //     table.search("Sides").draw();
-  //   });
-  //   $('#button5').on('click',function(){
-  //     table.search("Drinks").draw();
-  //   });
-  //   $('#button6').on('click',function(){
-  //     table.search("Dessert").draw();
-  //   });
-  // });
-  function refresh_buttons(){
-  $.ajax({
-    type     : "POST",
-    url      : "tools/select_category.php",
-    success  : function(data) {
-      set_buttons(JSON.parse(data));
-    }
-  }).fail(function(xhr, status, error){
-  	alert(error);
-  });
+<script>
+//Search bar AND Side bar
+$(document).ready(function () {
+  var table = $('.table').DataTable();
+});
+//   $('#button1').on('click',function(){
+//     table.search("Burger").draw();
+//   });
 
-  function set_buttons(data){
-    $("#typeBtnList").empty();
-    data.forEach(function(row){
-      row.forEach(function(value){
-        // var str = "'"+value+"'";
-        // $("#typeBtnList").append('<button class="btn btn-primary type-btn" onclick="changeType('+str+')"><p>'+value+'</p></button>');
-        $("#typeBtnList").append('<a class="btn btn-primary type-btn" ><p>'+value+'</p></a>');
-      });
-    });
+function refresh_buttons(){
+$.ajax({
+  type     : "POST",
+  url      : "tools/select_category.php",
+  success  : function(data) {
+    set_buttons(JSON.parse(data));
   }
+}).fail(function(xhr, status, error){
+	alert(error);
+});
+
+function set_buttons(data){
+  $("#typeBtnList").empty();
+  data.forEach(function(row){
+    row.forEach(function(value){
+      // var str = "'"+value+"'";
+      // $("#typeBtnList").append('<button class="btn btn-primary type-btn" onclick="changeType('+str+')"><p>'+value+'</p></button>');
+      $("#typeBtnList").append('<a class="btn btn-primary type-btn" ><p>'+value+'</p></a>');
+    });
+  });
+}
 }
 refresh_buttons();
 
-//Mini-order summary
-$("#menu tr").click(function() {
-  var tableData = $(this).children("td").map(function() {
-    return $(this).text();
-  }).get();
-  // console.log(tableData);
-  $('#order-list .card-block').append('<p class="row" name="'+ '" id="summary"></p>')+
-  $('#order-list .card-block p:last-child').append('<span class="col-6" name="foodname"> ' + tableData[1]+
-  '</span><br /><input class="col" name="foodid[]" value='+ tableData[0]+'>' +
-  '<input class="col" name="price" class="price-order" value='+ Number(tableData[2])+'>');
-  var sum = 0;
-
-  $(".card-block").find("input[name ='price']").each(function(){
-    sum += Number($(this).val());
-    $('#total').text('$' + sum.toFixed(2));
-  });
-  console.log('sum: ' + sum);
-
-});
-
-
-  </script>
+</script>
+<script src="js/menu.js"></script>
 </body>
 </html>

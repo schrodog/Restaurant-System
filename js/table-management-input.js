@@ -202,18 +202,30 @@ $(document).ready(function(){
 
 
 function GoToTable(tableNo,available){
-  $("#assignNewModal").modal('show');
-  console.log('table:'+tableNo);
-  if (available=='N'){
+  if (available=='Y'){
+    console.log('table:'+available);
+    $("#assignNewModal").modal('show');
+    // create new master order and go to order page
     $("#assignNewModal #OK").one('click',function(){
       var d = new Date();
       var currentDate = d.getUTCFullYear()+'-'+ d.getUTCMonth()+'-'+ d.getUTCDate();
       $.ajax({
         type: "POST",
         url: "tools/update.php",
-        data: { "operation": "insert","target_table":"masterorder","valueList":[[tableNo,currentDate]],"headerList":["TableNo","CheckOut Date"],"getLastID":"1" },
+        data: { "operation": "update","target_table":"table","valueList":[["N"]],"headerList":["available"],"idName":"TableNo","idList":[tableNo] },
         success: function(data, txt, jqxhr){
           // alert(data);
+          // refreshData();
+        }
+      }).fail(function(xhr, status, error){
+        alert(error);
+      });
+      $.ajax({
+        type: "POST",
+        url: "tools/update.php",
+        data: { "operation": "insert","target_table":"masterorder","valueList":[[tableNo,currentDate]],"headerList":["TableNo","CheckOut Date"],"getLastID":"1" },
+        success: function(data, txt, jqxhr){
+          // alert(JSON.parse(data));
           goToOrder(data,tableNo);
           // refreshData();
         }
@@ -221,14 +233,15 @@ function GoToTable(tableNo,available){
         alert(error);
       });
     });
-  } else {
+  }  // search for latest master order according to table no
+  else {
     $.ajax({
       type: "POST",
-      url: "tools/update.php",
-      data: { "operation": "insert","target_table":"masterorder","valueList":[[tableNo,currentDate]],"headerList":["TableNo","CheckOut Date"],"getLastID":"1" },
+      url: "tools/find_masterOrderID.php",
+      data: { "tableno": tableNo },
       success: function(data, txt, jqxhr){
-        // alert(data);
-        goToOrder(data,tableNo);
+        // alert(JSON.parse(data)[0]+','+tableNo);
+        goToOrder((JSON.parse(data)[0])[0],tableNo);
         // refreshData();
       }
     }).fail(function(xhr, status, error){
@@ -240,17 +253,19 @@ function GoToTable(tableNo,available){
 
 function refreshData(){
 	idChange=[];
-  // window.location = "table-management.php";
+  window.location = "table-management.php";
 	// $("#mainTable tbody").load("js/test.php");
 	// refresh_buttons();
 }
 
 function goToOrder(masterOrderID, tableNo){
+  console.log(masterOrderID+'a,'+tableNo);
   $.ajax({
     type: "POST",
     url: "tools/save_session.php",
-    data: { "value":[masterOrderID, tableNo],"name":["masterOrderID","tableNo"]},
+    data: { "value":[masterOrderID, tableNo],"name":["MasterOrderID","TableNo"]},
     success: function(data, txt, jqxhr){
+        // alert(data);
         window.location = "order.php";
     }
   }).fail(function(xhr, status, error){
