@@ -17,7 +17,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <script src="js/user-management-editabletable.js"></script>
     <script src="js/user-management-input.js"></script>
-    <script src="tools/table-sort.js"></script>
+    <script src="js/table-sort.js"></script>
 
 </head>
 
@@ -25,7 +25,7 @@
 
 <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand mr-auto" href="index.php">Home</a>
+    <a class="navbar-brand mr-auto" href="main_menu-manager.php">Home</a>
 
     <form class="form-inline"> <!-- mt-2 mt-md-0 -->
       <input id="search" class="form-control mr-sm-2 no_focus" type="text" placeholder="Search by username" aria-label=" Search">

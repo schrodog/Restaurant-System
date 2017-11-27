@@ -49,7 +49,41 @@ $(document).ready(function(){
 		}).fail(function(xhr, status, error){
 			alert(error);
 		});
-	})
+	});
+  
+  $("#saveOrderBtn").click(function(){
+    var result = [], tmp=[];
+    var masterOrderID = document.head.querySelector("[name=data-masterOrderID]").content.replace(/\n/g,"");
+    
+    $("#orderBlock .card-block p.summary-group").each(function(){
+      tmp=[];
+      $(this).find("input").each(function(){
+        tmp.push($(this).val());
+      });
+      $(this).find("span[name='price']").each(function(){
+        // console.log( ($(this).text()).substring(2) );
+        tmp.push( ($(this).text()).substring(2));
+      });
+      tmp.push(masterOrderID);
+      result.push(tmp);
+    });
+    
+    // result.forEach(function(value){
+    //   console.log(value);
+    // });
+    $.ajax({
+      type     : "POST",
+      url      : "tools/update.php",
+      data     : {"operation":"insert", "target_table":"order", "headerList": ["FoodID","Quantity","Price","MasterOrderID"],"valueList":result},
+      success  : function(data) {
+        // alert(data);
+        window.location = "order.php";
+      }
+    }).fail(function(xhr, status, error){
+			alert(error);
+		});
+    
+  });
 
 });
 

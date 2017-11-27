@@ -43,7 +43,13 @@ if ($privilege=="User") {
 
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="icon-bar">
-      <a class="active" href="index.html"><i class="fa fa-home"></i></a>
+      <?php 
+      if ($_SESSION["Privilege"]=="Administrator"){
+        echo '<a class="active" href="main_menu-manager.php"><i class="fa fa-home"></i></a>';
+      } else {
+        echo '<a class="active" href="main_menu-user.php"><i class="fa fa-home"></i></a>';
+      }
+       ?>
     </div>
     <ul class="title" >Table Menu</p></ul>
     <button type="button" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>

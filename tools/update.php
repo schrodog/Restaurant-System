@@ -1,6 +1,6 @@
 <?php
 /*** compulsory: (target_table, operation)
-    update: headerList, idList, idName, valueList
+    update: headerList, valueList , idList, idName
     insertEmpty: idName
     insert: headerList, valueList
     delete: idName, valueList (only 1 [])
@@ -25,12 +25,12 @@ try {
 
     if ($operation=="update"){
         // $sql = "update User set FName=?, LName=?, Age=?, Username=?, `Contact Number`=?, Position=? where id=?;";
-        $columns = implode("=?, ", $headerList);
+        $columns = "`".implode("`=?, `", $headerList)."`";
         $sql = "UPDATE `$target_table` SET ".$columns."=? WHERE $idName=?;";
         if(isset($_POST["override"])) { $sql = "SET SQL_SAFE_UPDATES=0; SET FOREIGN_KEY_CHECKS=0;".$sql." SET SQL_SAFE_UPDATES=1; SET FOREIGN_KEY_CHECKS=1;"; }
 
         $stmt = $conn->prepare($sql);
-        // echo $sql;
+        echo $sql;
         foreach ($valueList as $index=>$value) {
             $value2 = array_map(function($val){
               return $val === "" ? NULL : $val;

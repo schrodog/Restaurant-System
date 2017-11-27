@@ -30,7 +30,7 @@ session_start();
 
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="icon-bar">
-      <a class="active" href="index.html"><i class="fa fa-home"></i></a>
+      <a class="active" href="main_menu-manager.php"><i class="fa fa-home"></i></a>
     </div>
     <ul class="title" >Food Menu</p></ul>
     <button type="button" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>

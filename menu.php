@@ -8,8 +8,9 @@ session_start();
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <?php
+  echo "<meta name='data-masterOrderID' content='".$_SESSION["MasterOrderID"]."'>";
+  ?>
 
   <title>Order System</title>
 
@@ -28,7 +29,13 @@ session_start();
 
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="icon-bar">
-      <a class="active" href="index.html"><i class="fa fa-home"></i></a>
+      <?php 
+      if ($_SESSION["Privilege"]=="Administrator"){
+        echo '<a class="active" href="main_menu-manager.php"><i class="fa fa-home"></i></a>';
+      } else {
+        echo '<a class="active" href="main_menu-user.php"><i class="fa fa-home"></i></a>';
+      }
+       ?>
     </div>
     <ul class="title" >Food Menu</p></ul>
     <button type="button" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
@@ -119,7 +126,7 @@ session_start();
             </div>
 
           </div>
-          <input type= "submit" class="btn btn-info" name="save" value="save"></a>
+          <button type="button" class="btn btn-info" name="save" id="saveOrderBtn">Save</button>
         </form>
     </div>
 

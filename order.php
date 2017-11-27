@@ -12,12 +12,12 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- <script src="lib/jquery-3.2.1.min.js"></script> -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <!-- <link href="user-man.css" rel="stylesheet" type="text/css" /> -->
   <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
-  <script src="lib/jquery-3.2.1.min.js"></script>
   <script src="lib/jquery.dataTables.min.js"></script>
   <link href="custom_css/order.css" rel="stylesheet" type="text/css">
 
@@ -31,7 +31,13 @@
 
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="icon-bar">
-      <a class="active" href="index.html"><i class="fa fa-home"></i></a>
+      <?php 
+      if ($_SESSION["Privilege"]=="Administrator"){
+        echo '<a class="active" href="main_menu-manager.php"><i class="fa fa-home"></i></a>';
+      } else {
+        echo '<a class="active" href="main_menu-user.php"><i class="fa fa-home"></i></a>';
+      }
+      ?>
     </div>
     <a type="button" class="btn btn-info active" href="table-management.php">Table</a>
 
@@ -53,8 +59,8 @@
 </div>
 </form> -->
 <?php
-echo "MasterOrderID:".$_SESSION["MasterOrderID"]."<br>" ;
-echo "tableNo:".$_SESSION["TableNo"];
+echo "MasterOrderID: <p id='data-masterOrderID'>".$_SESSION["MasterOrderID"]."</p><br>" ;
+echo "Table No: <p id='data-tableno'>".$_SESSION["TableNo"]."</p>";
 ?>
 <div class="row  justify-content-md-center">
     <table class="table table-hover table-striped" id="mainTable">
@@ -84,7 +90,7 @@ echo "tableNo:".$_SESSION["TableNo"];
 
 
         $sql = "SELECT orderid, `order`.quantity, `order`.FoodID,`menu`.FoodName, `order`.price FROM `order`,`menu` where masterorderid='".$_SESSION["MasterOrderID"]."' and menu.FoodID=`order`.FoodID";
-        echo $sql;
+        // echo $sql;
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -148,8 +154,31 @@ echo "tableNo:".$_SESSION["TableNo"];
   </div>
 </div></div></div>
 
+<div id="checkoutModal" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">Check Out</h4>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-item-list">
+      <label>Enter Customer payment:</label>
+      <input type="text" class="form-control no_focus" id="payment">
+    </div>
+    <div class="modal-item-list">
+      <label for="pwd">Change</label>
+      <input type="number" class="form-control no_focus" id="change" readonly>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" id="OK" data-dismiss="modal">Confirm Bill</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+  </div>
+</div></div></div>
 
 <script src="js/order-input.js"></script>
+<script type="text/javascript">
+  calcTotal();
+</script>
 
 </body>
 </html>
