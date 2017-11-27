@@ -2,8 +2,8 @@
 session_start();
 
 $servername = "localhost";
-$username = "user1";
-$password = "123456";
+$username = $_SESSION["Username"];
+$password = $_SESSION["Password"];
 $dbname = "Restaurant";
 
 // Create connection

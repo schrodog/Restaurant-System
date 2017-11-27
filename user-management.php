@@ -17,7 +17,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <script src="js/user-management-editabletable.js"></script>
     <script src="js/user-management-input.js"></script>
-    <script src="js/table-sort.js"></script>
+    <script src="tools/table-sort.js"></script>
 
 </head>
 
@@ -80,8 +80,8 @@ class TableRows extends RecursiveIteratorIterator {
 }
 
 $servername="localhost";
-$username = "user1";
-$password = "123456";
+$username = $_SESSION["Username"];
+$password =  $_SESSION["Password"];
 $dbname = "Restaurant";
 
 try {

@@ -77,8 +77,8 @@ echo "Table No: <p id='data-tableno'>".$_SESSION["TableNo"]."</p>";
         <?php
 
         $servername = "localhost";
-        $username = "user1";
-        $password = "123456";
+        $username = $_SESSION["Username"];
+        $password = $_SESSION["Password"];
         $dbname = "Restaurant";
 
         // Create connection

@@ -8,8 +8,8 @@ if (isset($_POST["newName"])){ $newName = $_POST["newName"]; }
 if (isset($_POST["newPwd"])){ $newPwd = $_POST["newPwd"]; }
 
 $servername="localhost";
-$username1 = "user1";
-$password1 = "123456";
+$username1 = $_SESSION["Username"];
+$password1 = $_SESSION["Password"];
 $dbname = "Restaurant";
 
 try {
