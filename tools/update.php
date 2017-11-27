@@ -5,6 +5,7 @@
     insert: headerList, valueList
     delete: idName, valueList (only 1 [])
 ***/
+session_start();
 
 $operation = $_POST["operation"];
 $target_table = $_POST["target_table"];

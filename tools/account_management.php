@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 $operation = $_POST["operation"];
 if (isset($_POST["username"])){ $username = $_POST["username"]; }
@@ -51,12 +52,13 @@ try {
       $conn->exec($sql);
     }
     elseif ($operation=="view_password") {
-      $sql = "SELECT PassWord from staff where UserName='$username'; ";
+      $sql = "SELECT PassWord from staff where `UserName`='$username'; ";
       $stmt = $conn->prepare($sql);
       $stmt->execute();
       $stmt->setFetchMode(PDO::FETCH_ASSOC);
       $result=(($stmt->fetchAll())[0])['PassWord'];
       echo $result;
+      // echo $sql;
     }
 
 } catch (PDOException $e){

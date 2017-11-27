@@ -111,7 +111,7 @@ $(document).ready(function(){
 		if (updateRowNo.length>0){
 			$.ajax({
 				type: "POST",
-				url: "update.php",
+				url: "tools/update.php",
 				data: { "valueList": updateData,"target_table":"staff","headerList": header,"idList":idChange,"idName":"staffID", "operation": "update"},
 				success: function(data, txt, jqxhr){
 					alert(data);
@@ -225,7 +225,7 @@ function newPwd(){
 		// update password in staff table
 		$.ajax({
 			type: "POST",
-			url: "update.php",
+			url: "tools/update.php",
 			data: { "operation": "update","target_table":"staff","idName":"staffID","idList":[keyID],"headerList":["PassWord"],"valueList":[[pwd]]},
 			success: function(data, txt, jqxhr){
 				alert(data);
@@ -236,7 +236,7 @@ function newPwd(){
 		// update pwd in mysql account
 		$.ajax({
 			type: "POST",
-			url: "account_management.php",
+			url: "tools/account_management.php",
 			data: { "operation": "change_password", "username":username, "newPwd":pwd},
 			success: function(data, txt, jqxhr){
 				alert(data);
@@ -262,7 +262,7 @@ function changeUser(){
 		// change username in staff table
 		$.ajax({
 			type: "POST",
-			url: "update.php",
+			url: "tools/update.php",
 			data: { "operation": "update","target_table":"staff","idName":"staffID","idList":[keyID],"headerList":["Username"],"valueList":[[newName]]},
 			success: function(data, txt, jqxhr){
 				// alert(data);
@@ -273,7 +273,7 @@ function changeUser(){
 		// change username in mysql account
 		$.ajax({
 			type: "POST",
-			url: "account_management.php",
+			url: "tools/account_management.php",
 			data: { "operation": "change_username", "newName":newName, "username":username },
 			success: function(data, txt, jqxhr){
 				// alert(data);
@@ -290,9 +290,10 @@ function viewPassword(){
 	$("#viewPasswordModal").modal('show');
 	$.ajax({
 		type: "POST",
-		url: "account_management.php",
+		url: "tools/account_management.php",
 		data: { "operation": "view_password", "username":username},
 		success: function(data, txt, jqxhr){
+			// console.log(data);
 			$("#viewPasswordModal #currentPwd").text(data);
 		}
 	}).fail(function(xhr, status, error){
@@ -305,7 +306,7 @@ function addUser(){
 	// console.log(username+','+pwd+','+priv);
 	$.ajax({
 		type: "POST",
-		url: "update.php",
+		url: "tools/update.php",
 		data: { "operation": "insert","target_table":"staff","headerList":["Username","PassWord"],"valueList":[[username,pwd]]},
 		success: function(data, txt, jqxhr){
 		}
@@ -314,7 +315,7 @@ function addUser(){
 	});
 	$.ajax({
 		type: "POST",
-		url: "account_management.php",
+		url: "tools/account_management.php",
 		data: { "operation": "add_user", "username":username, "password":pwd, "privilege":priv},
 		success: function(data, txt, jqxhr){
 			window.location.href = "user-management.php"
@@ -328,7 +329,7 @@ function deleteUser(){
 	console.log('delID:'+delID);
 	$.ajax({
 		type: "POST",
-		url: "update.php",
+		url: "tools/update.php",
 		data: { "operation": "delete","target_table":"staff","valueList":[delID],"idName":"StaffID"},
 		success: function(data, txt, jqxhr){
 			// alert(data);
@@ -338,7 +339,7 @@ function deleteUser(){
 	});
 	$.ajax({
 		type: "POST",
-		url: "account_management.php",
+		url: "tools/account_management.php",
 		data: { "operation": "delete_user", "username":username },
 		success: function(data, txt, jqxhr){
 			window.location.href = "user-management.php"

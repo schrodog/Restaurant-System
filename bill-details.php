@@ -15,14 +15,14 @@ $billDate = $_SESSION["billDate"];
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
   <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
-  <link href="menu-order-count.css" rel="stylesheet" type="text/css" />
-    <link href="bill-details.css" rel="stylesheet" type="text/css" />
+  <link href="custom_css/menu-order-count.css" rel="stylesheet" type="text/css" />
+    <link href="custom_css/bill-details.css" rel="stylesheet" type="text/css" />
 
     <script src="lib/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <!-- <script src="menuOrderCount-input.js"></script> -->
-    <script src="table-sort.js"></script>
+    <script src="js/table-sort.js"></script>
 <script>
 function removeFile(){
   $(".modal-dialog td:nth-child(5)").remove();
@@ -86,18 +86,15 @@ class TableRows extends RecursiveIteratorIterator {
 }
 
 $servername="localhost";
-$username = "user1";
-$password = "123456";
+$username = $_SESSION["Username"];
+$password = $_SESSION["Password"];
 $dbname = "Restaurant";
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-
-
-    $sql = "SELECT MasterOrderID,Price,Payment,`Change`,StaffID,TableNo,`CheckOut Time` FROM masterorder
-            where ReportID=$reportID;";
+    $sql = "SELECT MasterOrderID,Price,Payment,`Change`,StaffID,TableNo,`CheckOut Time` FROM masterorder where ReportID=$reportID;";
 
     // echo $sql;
     $stmt = $conn->prepare($sql);
@@ -145,12 +142,12 @@ $conn = null;
               <tbody>
 <?php
 
-$servername="localhost";
-$username = "user1";
-$password = "123456";
-$dbname = "Restaurant";
+// $servername="localhost";
+// $username = "user1";
+// $password = "123456";
+// $dbname = "Restaurant";
 
-$masterOrderID = $_SESSION["masterOrderID"];
+if (isset($_SESSION["masterOrderID"])) {$masterOrderID = $_SESSION["masterOrderID"];}
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -191,9 +188,10 @@ $("#mainTable .bill-file").click(function(){
   // console.log(masterID);
   $.ajax({
     type: "POST",
-    url: "save_session.php",
+    url: "tools/save_session.php",
     data: {"name": ["masterOrderID"] , "value":[masterID] },
     success: function(data, txt, jqxhr){
+      console.log(masterID);
       // window.location.href= 'bill-details.php';
       $("#orderModal").modal('show');
     }

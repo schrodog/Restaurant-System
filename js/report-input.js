@@ -111,11 +111,11 @@ $(document).ready(function(){
 		var reportID = thisrow.find("td").first().text();
 		var billDate = thisrow.find("td:nth-child(4)").text();
 		// console.log(thisrow.text());
-		console.log(reportID);
+		console.log('report:'+reportID);
 
 		$.ajax({
 			type: "POST",
-			url: "save_session.php",
+			url: "tools/save_session.php",
 			data: {"name": ["reportID","billDate"] , "value":[reportID,billDate] },
 			success: function(data, txt, jqxhr){
 				url = 'bill-details.php';
