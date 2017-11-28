@@ -90,11 +90,11 @@ $(document).ready(function(){
 		    });
 		    updateData.push(valueList);
 		});
-		
+
 		updateData.forEach(function(val,index,ar){
 		    console.log("1:"+val);
 		});
-		
+
 		origHeader = ["FoodName","Price","Quantity","Category"];
 		// for(var i=0; i<)
 
@@ -106,6 +106,7 @@ $(document).ready(function(){
 				success: function(data, txt, jqxhr){
 					// alert(data);
 					refreshData();
+					alert("Update success.");
 				}
 			}).fail(function(xhr, status, error){
 				alert(error);
@@ -126,46 +127,34 @@ $(document).ready(function(){
 	$("#addBtn").click(function(){
 		$("#newFoodModal").modal('show');
 	});
-	
-	// create new food code
+
+	// create new food
 	$("body").on('click','#newFoodModal #OK',function(){
 		var foodCode = $("#newFoodModal input[id='foodCode']").val();
 		var foodName = $("#newFoodModal input[id='foodName']").val();
 		var price = $("#newFoodModal input[id='price']").val();
 		var quantity = $("#newFoodModal input[id='quantity']").val();
 		var category = $("#newFoodModal input[id='category']").val();
-		
+
 		console.log('food:'+foodCode+","+foodName+","+price+','+quantity+','+category);
-		
+
 		if (foodCode=="" || category==""){
 			alert("Food code or category is empty !");
 			$("#newFoodModal").modal('show');
 			// $("#newFoodModal").one('hidden.bs.modal',function(){
 			// });
-		} else if ((price!="" && !Number.isInteger(price)) || (quantity!="" && !Number.isInteger(quantity)) ) {
+		} else if ((price!="" && !$.isNumeric(price)) || (quantity!="" && !$.isNumeric(quantity)) ) {
 			alert("Price or quantity must be integer !");
 			$("#newFoodModal").modal('show');
-		} 
+		}
 		else {
-			var header=["FoodID, Category"];
-			var valueList=[foodCode,category];
-			if (price != ""){
-				header.push("Price");
-				valueList.push(price);
-			}
-			if (quantity != ""){
-				header.push("Quantity");
-				valueList.push(quantity);
-			}
-			if (price != ""){
-				header.push("FoodName");
-				valueList.push(foodName);
-			}
 			$.ajax({
 				type: "POST",
 				url: "tools/update.php",
-				data: { "operation": "insert","target_table":"menu","headerList":header,"valueList":[valueList]},
+				data: { "operation": "insert","target_table":"menu","headerList":["FoodID", "Category","quantity","price","FoodName"],
+					"valueList":[[foodCode,category,quantity,price,foodName]]},
 				success: function(data, txt, jqxhr){
+					// alert(data);
 					refreshData();
 				}
 			}).fail(function(xhr, status, error){
@@ -173,7 +162,7 @@ $(document).ready(function(){
 			});
 		}
 	});
-	
+
 	//delete row
 	$('body').on('click','.delBtn',function(){
 		var thisRow = $(this).parent().parent();
@@ -195,8 +184,8 @@ $(document).ready(function(){
 			});
 		});
 	});
-	
-	
+
+
 	// change type
 	$("body").on('click','.type-btn',function(){
 		var text=$(this).text();
@@ -212,14 +201,61 @@ $(document).ready(function(){
 		}).fail(function(xhr, status, error){
 			alert(error);
 		});
-	})
+	});
+
+	$(".search-block #searchCode").on('keyup',function(){
+		var text=$(this).val();
+		console.log('code:'+text);
+		$(this).siblings().not($(this)).val('');
+		if (text!=''){$("#mainTable tbody").load("tools/refreshMenu.php", {"foodCode":text});}
+	});
+	$(".search-block #searchName").on('keyup',function(){
+		var text=$(this).val();
+		$(this).siblings().not($(this)).val('');
+		console.log('name:'+text);
+		if (text!=''){$("#mainTable tbody").load("tools/refreshMenu.php", {"searchName":text});}
+	});
+	$(".search-block .price").on('keyup',function(){
+		$(this).siblings().not($(".price")).val('');
+		var text1 = Number($(".search-block #searchPrice1").val());
+		var text2 = Number($(".search-block #searchPrice2").val());
+		// console.log('price1:'+text1+"2:"+text2);
+		if (text1!='' && text2=='' && text1!=NaN){
+			// $("#mainTable tbody").load("tools/refreshMenu.php", {"searchPrice1":text1});
+			$.post("tools/refreshMenu.php", {"searchPrice1":text1}, function(data){ $("#mainTable tbody").html(data) });
+		} else if (text1=='' && text2!='' && text2!=NaN){
+			// $("#mainTable tbody").load("tools/refreshMenu.php", {"searchPrice2":text2});
+			$.post("tools/refreshMenu.php", {"searchPrice2":text2}, function(data){ $("#mainTable tbody").html(data) });
+		} else if (text1!='' && text2!='' && text1!=NaN  && text2!=NaN){
+			// $("#mainTable tbody").load("tools/refreshMenu.php", {"searchPrice2":text2, "searchPrice1":text1 });
+			$.post("tools/refreshMenu.php", {"searchPrice1":text1,"searchPrice2":text2 }, function(data){ $("#mainTable tbody").html(data) });
+		}
+	});
+	// $(".search-block #searchPrice2").on('keyup',function(){
+	// 	var text=$(this).val();
+	// 	$(this).siblings().not($(".price")).val('');
+	// 	console.log('price2:'+text);
+	// 	if (text!=''){$("#mainTable tbody").load("tools/refreshMenu.php", {"searchPrice2":text});}
+	// });
+	$(".search-block #searchQuantity1").on('keyup',function(){
+		var text=$(this).val();
+		$(this).siblings().not($(".quan")).val('');
+		console.log('quantity1:'+text);
+		if (text!=''){$("#mainTable tbody").load("tools/refreshMenu.php", {"searchQuantity1":text});}
+	});
+	$(".search-block #searchQuantity2").on('keyup',function(){
+		var text=$(this).val();
+		$(this).siblings().not($(".quan")).val('');
+		console.log('quantity2:'+text);
+		if (text!=''){$("#mainTable tbody").load("tools/refreshMenu.php", {"searchQuantity2":text});}
+	});
 
 
 });
 
 function refreshData(){
 	idChange=[];
-	$("#mainTable tbody").load("js/test.php");
+	$("#mainTable tbody").load("tools/refreshMenu.php");
 	refresh_buttons();
 }
 

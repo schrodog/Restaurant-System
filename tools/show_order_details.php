@@ -1,11 +1,27 @@
 <?php
 session_start();
-// $servername="localhost";
-// $username = "user1";
-// $password = "123456";
-// $dbname = "Restaurant";
+$servername="localhost";
+$username = $_SESSION["Username"];
+$password = $_SESSION["Password"];
+$dbname = "Restaurant";
 
-if (isset($_SESSION["masterOrderID"])) {$masterOrderID = $_SESSION["masterOrderID"];}
+$masterOrderID = $_SESSION["masterOrderID"];
+
+class TableRows2 extends RecursiveIteratorIterator {
+    function __construct($it){
+        parent::__construct($it, self::LEAVES_ONLY);
+    }
+    function current(){
+        $str = "<td>";
+        return $str.parent::current()."</td>";
+    }
+    function beginChildren(){
+        echo "<tr>";
+    }
+    function endChildren(){
+        echo "</tr>";
+    }
+}
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -21,7 +37,7 @@ try {
 
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC); // return associated array
     // create html table
-    foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll() )) as $k=>$v){
+    foreach(new TableRows2(new RecursiveArrayIterator($stmt->fetchAll() )) as $k=>$v){
         echo $v;
     }
 } catch (PDOException $e){

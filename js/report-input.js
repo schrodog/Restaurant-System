@@ -10,8 +10,15 @@ $.fn.reportInit = function(data){
 
 function calcTotal(){
 	var row = $("#mainTable tbody tr").length;
-	var total = 0;
-	$("#mainTable tr td:nth-child(3)").each(function(){
+	var total = 0, index=0;
+	var op = $("#data-op").text();
+	if (op=="1"){
+		index = 3;
+	} else if (op=='2' || op=='3') {
+		index = 2;
+	}
+	
+	$("#mainTable tr td:nth-child("+index+")").each(function(){
 		total += Number($(this).text());
 	});
 	$("#billTotal").text(row);

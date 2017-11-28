@@ -23,11 +23,6 @@ $billDate = $_SESSION["billDate"];
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <!-- <script src="menuOrderCount-input.js"></script> -->
     <script src="js/table-sort.js"></script>
-<script>
-function removeFile(){
-  $(".modal-dialog td:nth-child(5)").remove();
-}
-</script>
 
 </head>
 
@@ -44,12 +39,6 @@ echo "<div class='info'>
 //
 // echo "<p class='date'>Time range: <span class='text-primary'>$startDate</span> - <span class='text-success'>$endDate</span></p>";
 ?>
-
-<!-- <header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <button type="button" class="btn btn-warning" onclick="window.open('order-graph.php','_blank')">View As Graph</button>
-  </nav>
-</header> -->
 
 </div>
 
@@ -89,7 +78,7 @@ $servername="localhost";
 $username = $_SESSION["Username"];
 $password = $_SESSION["Password"];
 $dbname = "Restaurant";
-
+// table of daily bill record
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -114,12 +103,6 @@ $conn = null;
 ?>
 </tbody></table></div></div>
 
-<!-- <footer class="footer">
-    <div class="container">
-
-        <button type="button" class="btn btn-primary" id="viewOrderBtn">View order count</button>
-    </div>
-</footer> -->
 
 <div id="orderModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -139,47 +122,12 @@ $conn = null;
                  <th>Food Name</th>
                  <th>Price</th>
                 </tr></thead>
-              <tbody>
-<?php
+              <tbody id="refreshDetails">
 
-// $servername="localhost";
-// $username = "user1";
-// $password = "123456";
-// $dbname = "Restaurant";
-
-if (isset($_SESSION["masterOrderID"])) {$masterOrderID = $_SESSION["masterOrderID"];}
-
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $sql = "SELECT OrderID,`order`.Quantity,menu.FoodName,`order`.price
-            FROM `order`,menu
-            where `order`.FoodID=menu.FoodID and MasterOrderID=$masterOrderID;";
-
-    // echo $sql;
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();   // $stmt = PDOStatement class
-
-    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC); // return associated array
-    // create html table
-    foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll() )) as $k=>$v){
-        echo $v;
-    }
-} catch (PDOException $e){
-    echo $e->getMessage();
-}
-$conn = null;
-
-echo "<script>removeFile()</script>";
-?>
       </div>
-      <!-- <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="OK" data-dismiss="modal">OK</button>
-      </div> -->
     </div>
   </div>
-</div>
+</div></div></div>
 
 <script>
 $("#mainTable .bill-file").click(function(){
@@ -192,7 +140,7 @@ $("#mainTable .bill-file").click(function(){
     data: {"name": ["masterOrderID"] , "value":[masterID] },
     success: function(data, txt, jqxhr){
       console.log(masterID);
-      // window.location.href= 'bill-details.php';
+      $("#refreshDetails").load("tools/show_order_details.php");
       $("#orderModal").modal('show');
     }
   }).fail(function(xhr, status, error){

@@ -18,11 +18,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script> -->
     <script src="external/google-code-prettify/prettify.js"></script>
-        <link href="index.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
     <script src="mindmup-editabletable.js"></script>
     <script src="numeric-input-example.js"></script>
     <script src="table-sort.js"></script>
-    <script src="operation.js"></script>
+    <!-- <script src="operation.js"></script> -->
 </head>
 <body>
 
@@ -98,7 +98,7 @@ $conn = null;
 <script>
   $('#mainTable').editableTableWidget().numericInputExample().find('td:first').focus();
   // $('#textAreaEditor').editableTableWidget({editor: $('<textarea>')});
-  window.prettyPrint && prettyPrint();
+  // window.prettyPrint && prettyPrint();
 </script>
 
 </body>

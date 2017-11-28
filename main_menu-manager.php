@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 ?>
 <!DOCTYPE html>
@@ -14,10 +14,10 @@ session_start();
     <title>Order System</title>
 
     <!-- Bootstrap core CSS -->
-    
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Custom styles for this template -->
-	
+
     <link href="user-man.css" rel="stylesheet" type="text/css" />
 	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
@@ -69,9 +69,9 @@ body {
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-		
+
 	<ul class="title" >Main Menu</p></ul>
-		
+
   <button type="button" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
 </nav>
   <!-- Page Content -->
@@ -80,12 +80,12 @@ body {
       <div class="col-lg-12 text-center">
 	    <br>
           <br>
-          <a class="btn btn-primary  btn-lg btn-block" href="table-management.php"><h1 class="my-5">Search Table</h1></a>
-          <br><br><br>
-       
+          <!-- <a class="btn btn-primary  btn-lg btn-block" href="table-management.php"><h1 class="my-5">Search Table</h1></a>
+          <br><br><br> -->
+
           <a class="btn btn-primary btn-lg btn-block" href="management_menu.php"><h1 class="my-5">Management</h1></a>
           <br><br><br>
-          
+
           <a class="btn btn-primary btn-lg btn-block" href="report.php"><h1 class="my-5">Report</h1></a>
         </ul>
       </div>

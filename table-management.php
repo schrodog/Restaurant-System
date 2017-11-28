@@ -1,7 +1,7 @@
 <?php
 session_start();
 // $privilege = "Administrator";
-$privilege = "User";
+$privilege = $_SESSION["Privilege"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +43,7 @@ if ($privilege=="User") {
 
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="icon-bar">
-      <?php 
+      <?php
       if ($_SESSION["Privilege"]=="Administrator"){
         echo '<a class="active" href="main_menu-manager.php"><i class="fa fa-home"></i></a>';
       } else {

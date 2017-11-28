@@ -48,6 +48,7 @@ if (isset($_GET["op"])){
 } else {
   $operation = "1";
 }
+echo "<p id='data-op' style='display:none'>$operation</p>";
 if ($operation=="1"){
   echo "<h2>Daily Report</h2>";
 } elseif ($operation=="2"){
@@ -61,68 +62,68 @@ $_SESSION["dateRange"] = $dateRange;
  ?>
 <!-- Time range show -->
 <div class="time-range" id="time-range">
-  <div class="dropdown">
-   <button onclick="showDropdown(1)" class="dropbtn dropdown-toggle btn btn-primary" id="startYear">Year</button>
-   <div id="startYearList" class="dropdown-content">
-     <a>2017</a>
-     <a>2016</a>
-     <a>2015</a>
-     <a>2014</a>
-   </div>
-  </div>
-  <div class="dropdown">
-   <button onclick="showDropdown(2)" class="dropbtn dropdown-toggle btn btn-primary" id="startMonth">Month</button>
-   <div id="startMonthList" class="dropdown-content">
-     <a>1</a><a>2</a><a>3</a>
-     <a>4</a><a>5</a><a>6</a>
-     <a>7</a><a>8</a><a>9</a>
-     <a>10</a><a>11</a><a>12</a>
-   </div>
-  </div>
-  <div class="dropdown">
-   <button onclick="showDropdown(3)" class="dropbtn dropdown-toggle btn btn-primary" id="startDay">Day</button>
-   <div id="startDayList" class="dropdown-content">
-     <a>1</a><a>2</a><a>3</a><a>4</a><a>5</a>
-     <a>6</a><a>7</a><a>8</a><a>9</a><a>10</a>
-     <a>11</a><a>12</a><a>13</a><a>14</a><a>15</a>
-     <a>16</a><a>17</a><a>18</a><a>19</a><a>20</a>
-     <a>21</a><a>22</a><a>23</a><a>24</a><a>25</a>
-     <a>26</a><a>27</a><a>28</a><a>29</a><a>30</a>
-     <a>31</a>
-   </div>
-  </div>
-  <span class="date-separator"> - </span>
-  <div class="dropdown">
-   <button onclick="showDropdown(4)" class="dropbtn dropdown-toggle btn btn-primary" id="endYear">Year</button>
-   <div id="endYearList" class="dropdown-content">
-     <a>2018</a>
-     <a>2017</a>
-     <a>2016</a>
-     <a>2015</a>
-     <a>2014</a>
-   </div>
-  </div>
-  <div class="dropdown">
-   <button onclick="showDropdown(5)" class="dropbtn dropdown-toggle btn btn-primary" id="endMonth">Month</button>
-   <div id="endMonthList" class="dropdown-content">
-     <a>1</a><a>2</a><a>3</a>
-     <a>4</a><a>5</a><a>6</a>
-     <a>7</a><a>8</a><a>9</a>
-     <a>10</a><a>11</a><a>12</a>
-   </div>
-  </div>
-  <div class="dropdown">
-   <button onclick="showDropdown(6)" class="dropbtn dropdown-toggle btn btn-primary" id="endDay">Day</button>
-   <div id="endDayList" class="dropdown-content">
-     <a>1</a><a>2</a><a>3</a><a>4</a><a>5</a>
-     <a>6</a><a>7</a><a>8</a><a>9</a><a>10</a>
-     <a>11</a><a>12</a><a>13</a><a>14</a><a>15</a>
-     <a>16</a><a>17</a><a>18</a><a>19</a><a>20</a>
-     <a>21</a><a>22</a><a>23</a><a>24</a><a>25</a>
-     <a>26</a><a>27</a><a>28</a><a>29</a><a>30</a>
-     <a>31</a>
-   </div>
-  </div>
+    <div class="dropdown">
+     <button onclick="showDropdown(1)" class="dropbtn dropdown-toggle btn btn-primary" id="startYear">Year</button>
+     <div id="startYearList" class="dropdown-content">
+       <a>2017</a>
+       <a>2016</a>
+       <a>2015</a>
+       <a>2014</a>
+     </div>
+    </div>
+    <div class="dropdown">
+     <button onclick="showDropdown(2)" class="dropbtn dropdown-toggle btn btn-primary" id="startMonth">Month</button>
+     <div id="startMonthList" class="dropdown-content">
+       <a>1</a><a>2</a><a>3</a>
+       <a>4</a><a>5</a><a>6</a>
+       <a>7</a><a>8</a><a>9</a>
+       <a>10</a><a>11</a><a>12</a>
+     </div>
+    </div>
+    <div class="dropdown">
+     <button onclick="showDropdown(3)" class="dropbtn dropdown-toggle btn btn-primary" id="startDay">Day</button>
+     <div id="startDayList" class="dropdown-content">
+       <a>1</a><a>2</a><a>3</a><a>4</a><a>5</a>
+       <a>6</a><a>7</a><a>8</a><a>9</a><a>10</a>
+       <a>11</a><a>12</a><a>13</a><a>14</a><a>15</a>
+       <a>16</a><a>17</a><a>18</a><a>19</a><a>20</a>
+       <a>21</a><a>22</a><a>23</a><a>24</a><a>25</a>
+       <a>26</a><a>27</a><a>28</a><a>29</a><a>30</a>
+       <a>31</a>
+     </div>
+    </div>
+    <span class="date-separator"> - </span>
+    <div class="dropdown">
+     <button onclick="showDropdown(4)" class="dropbtn dropdown-toggle btn btn-primary" id="endYear">Year</button>
+     <div id="endYearList" class="dropdown-content">
+       <a>2018</a>
+       <a>2017</a>
+       <a>2016</a>
+       <a>2015</a>
+       <a>2014</a>
+     </div>
+    </div>
+    <div class="dropdown">
+     <button onclick="showDropdown(5)" class="dropbtn dropdown-toggle btn btn-primary" id="endMonth">Month</button>
+     <div id="endMonthList" class="dropdown-content">
+       <a>1</a><a>2</a><a>3</a>
+       <a>4</a><a>5</a><a>6</a>
+       <a>7</a><a>8</a><a>9</a>
+       <a>10</a><a>11</a><a>12</a>
+     </div>
+    </div>
+    <div class="dropdown">
+     <button onclick="showDropdown(6)" class="dropbtn dropdown-toggle btn btn-primary" id="endDay">Day</button>
+     <div id="endDayList" class="dropdown-content">
+       <a>1</a><a>2</a><a>3</a><a>4</a><a>5</a>
+       <a>6</a><a>7</a><a>8</a><a>9</a><a>10</a>
+       <a>11</a><a>12</a><a>13</a><a>14</a><a>15</a>
+       <a>16</a><a>17</a><a>18</a><a>19</a><a>20</a>
+       <a>21</a><a>22</a><a>23</a><a>24</a><a>25</a>
+       <a>26</a><a>27</a><a>28</a><a>29</a><a>30</a>
+       <a>31</a>
+     </div>
+    </div>
   <button type="button" class="btn btn-success" id="time-filter">Filter</button>
   <div class="btn-group" id="timeMode">
     <button type="button" class="btn btn-danger" id="dayMode">Day</button>
@@ -260,7 +261,7 @@ $conn = null;
 <footer class="footer">
     <div class="container">
         <div class="stat-group">
-          <span class="stat text-primary">Total Number of Bills: <b><span id="billTotal"></span></b></span><br>
+          <span class="stat text-primary">Total Number of Bills: <b><span id="billTotal"></span></b></span>
           <span class="stat text-success">Total Income: <b><span id="incomeTotal"></span></b></span>
         </div>
         <button type="button" class="btn btn-primary" id="viewOrderBtn">View order count</button>

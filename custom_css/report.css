@@ -141,15 +141,15 @@ body > .container {
   vertical-align: middle;
 }
 .time-range {
-  margin-left: 20px;
+  margin-left: 20%;
+  margin-right: 20%;
 }
 #time-filter {
   border-radius: 13px;
   margin-left: 3px;
 }
 #timeMode {
-  right: 50px;
-  position: absolute;
+  float: right;
 }
 
 
@@ -168,8 +168,14 @@ footer > .container {
 }
 
 footer .stat-group {
-  bottom: 5px;
+  bottom: 10px;
   position: absolute;
+  padding-left: 5%;
+}
+
+span.stat {
+  font-size: 20px;
+  padding-right: 30px;
 }
 
 #viewOrderBtn {

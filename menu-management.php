@@ -41,11 +41,16 @@ session_start();
     <br>
     <div class="search-block">
       <input type="text" id="searchCode" placeholder="Food Code" class="no_focus">
-      <button class="btn btn-outline-success" type="submit">Search</button>
+      <input type="text" id="searchName" placeholder="Food Name" class="no_focus">
+      <input type="text" id="searchPrice1" placeholder="Price" class="no_focus price">-
+      <input type="text" id="searchPrice2" placeholder="Price" class="no_focus price">
+      <input type="text" id="searchQuantity1" placeholder="Quanity" class="no_focus quan">-
+      <input type="text" id="searchQuantity2" placeholder="Quanity" class="no_focus quan">
+      <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
     </div>
 
     <div class="row justify-content-md-center" id="right-part">  <!--   justify-content-md-center -->
-      
+
          <table id="mainTable" class="table table-striped">
              <thead><tr>
                <th onclick="columnSort(0)" value="0">Code</th>
@@ -98,9 +103,9 @@ session_start();
             $sql = "select FoodID, FoodName, Price, Quantity, Category from `menu` where Category='$filter_category'";
 
             // echo $sql;
-            
+
             $stmt = $conn->prepare($sql);
-            $stmt->execute();  
+            $stmt->execute();
             $result = $stmt->setFetchMode(PDO::FETCH_ASSOC); // return associated array
             // create html table
             foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll() )) as $k=>$v){
@@ -158,7 +163,7 @@ session_start();
       <input type="text" class="form-control no_focus" id="quantity">
     </div>
     <div class="modal-item-list">
-      <label>Enter category:</label>
+      <label>Enter category*:</label>
       <input type="text" class="form-control no_focus" id="category">
     </div>
   </div>
