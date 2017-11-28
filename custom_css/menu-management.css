@@ -199,7 +199,7 @@ footer .btn {
 }
 #type-navigation {
 	position: absolute;
-	top: 0px;
+	top: -25px;
 	margin-right: 85%;
 	line-height: 30;
 }
@@ -227,14 +227,10 @@ body {
 }
 
 #right-part {
-	/*width: 80%;*/
-	/*position: absolute;*/
 	margin-left: 15%;
-	margin-top: 60px;
+	margin-top: 30px;
 	max-width: 900px;
-	/*margin-right: -10%;*/
 	padding: 0;
-	/*padding-right: -30px;*/
 }
 
 

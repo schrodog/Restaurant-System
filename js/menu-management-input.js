@@ -173,7 +173,7 @@ $(document).ready(function(){
 			$.ajax({
 				type: "POST",
 				url: "tools/update.php",
-				data: { "operation": "delete","target_table":"menu","valueList":[delID],"idName":"FoodID"},
+				data: { "operation": "delete","target_table":"menu","valueList":[delID],"idName":"FoodID","override":"1"},
 				success: function(data, txt, jqxhr){
 					// alert(data);
 					thisRow.remove();
@@ -195,6 +195,7 @@ $(document).ready(function(){
 			url: "tools/save_session.php",
 			data: { "value":[text],"name":["Category"]},
 			success: function(data, txt, jqxhr){
+				$(".search-block input").val('');
 				// window.location="menu-management.php";
 				refreshData();
 			}
@@ -220,36 +221,28 @@ $(document).ready(function(){
 		var text1 = Number($(".search-block #searchPrice1").val());
 		var text2 = Number($(".search-block #searchPrice2").val());
 		// console.log('price1:'+text1+"2:"+text2);
-		if (text1!='' && text2=='' && text1!=NaN){
-			// $("#mainTable tbody").load("tools/refreshMenu.php", {"searchPrice1":text1});
+		if (text1!='' && text2=='' && !isNaN(text1)){
 			$.post("tools/refreshMenu.php", {"searchPrice1":text1}, function(data){ $("#mainTable tbody").html(data) });
-		} else if (text1=='' && text2!='' && text2!=NaN){
-			// $("#mainTable tbody").load("tools/refreshMenu.php", {"searchPrice2":text2});
+		} else if (text1=='' && text2!='' && !isNaN(text2)){
 			$.post("tools/refreshMenu.php", {"searchPrice2":text2}, function(data){ $("#mainTable tbody").html(data) });
-		} else if (text1!='' && text2!='' && text1!=NaN  && text2!=NaN){
-			// $("#mainTable tbody").load("tools/refreshMenu.php", {"searchPrice2":text2, "searchPrice1":text1 });
+		} else if (text1!='' && text2!='' && !isNaN(text1)  && !isNaN(text2)){
 			$.post("tools/refreshMenu.php", {"searchPrice1":text1,"searchPrice2":text2 }, function(data){ $("#mainTable tbody").html(data) });
 		}
 	});
-	// $(".search-block #searchPrice2").on('keyup',function(){
-	// 	var text=$(this).val();
-	// 	$(this).siblings().not($(".price")).val('');
-	// 	console.log('price2:'+text);
-	// 	if (text!=''){$("#mainTable tbody").load("tools/refreshMenu.php", {"searchPrice2":text});}
-	// });
-	$(".search-block #searchQuantity1").on('keyup',function(){
-		var text=$(this).val();
-		$(this).siblings().not($(".quan")).val('');
-		console.log('quantity1:'+text);
-		if (text!=''){$("#mainTable tbody").load("tools/refreshMenu.php", {"searchQuantity1":text});}
-	});
-	$(".search-block #searchQuantity2").on('keyup',function(){
-		var text=$(this).val();
-		$(this).siblings().not($(".quan")).val('');
-		console.log('quantity2:'+text);
-		if (text!=''){$("#mainTable tbody").load("tools/refreshMenu.php", {"searchQuantity2":text});}
-	});
 
+	$(".search-block .quan").on('keyup',function(){
+		$(this).siblings().not($(".quan")).val('');
+		var text3 = Number($(".search-block #searchQuantity1").val());
+		var text4 = Number($(".search-block #searchQuantity2").val());
+		// console.log('quantity1:'+text);
+		if (text3!='' && text4=='' && !isNaN(text3)){
+			$.post("tools/refreshMenu.php", {"searchQuantity1":text3}, function(data){ $("#mainTable tbody").html(data) });
+		} else if (text3=='' && text4!='' && !isNaN(text4)){
+			$.post("tools/refreshMenu.php", {"searchQuantity2":text4}, function(data){ $("#mainTable tbody").html(data) });
+		} else if (text3!='' && text4!='' && !isNaN(text3)  && !isNaN(text4)){
+			$.post("tools/refreshMenu.php", {"searchQuantity1":text3,"searchQuantity2":text4 }, function(data){ $("#mainTable tbody").html(data) });
+		}
+	});
 
 });
 

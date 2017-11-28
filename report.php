@@ -34,7 +34,7 @@
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form> -->
 
-    <button type="button" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
+    <button type="button" id="logoutBtn" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
   </nav>
 </header>
 <?php
@@ -287,5 +287,7 @@ $conn = null;
 </div>
 -->
 <script type='text/javascript'>calcTotal();</script>
+<script src="js/logout.js"></script>
+
 </body>
 </html>

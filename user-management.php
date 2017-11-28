@@ -20,7 +20,7 @@ session_start();
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <script src="js/user-management-editabletable.js"></script>
     <script src="js/user-management-input.js"></script>
-    <script src="tools/table-sort.js"></script>
+    <script src="js/table-sort.js"></script>
 
 </head>
 
@@ -32,9 +32,9 @@ session_start();
 
     <form class="form-inline"> <!-- mt-2 mt-md-0 -->
       <input id="search" class="form-control mr-sm-2 no_focus" type="text" placeholder="Search by username" aria-label=" Search">
-      <button class="btn btn-outline-success" type="submit">Search</button> <!--  my-2 my-sm-0 -->
+      <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
     </form>
-    <button type="button" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
+    <button type="button" id="logoutBtn" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
   </nav>
 </header>
 <h2>User Management</h2>
@@ -181,6 +181,12 @@ $conn = null;
   <div class="modal-body">
     <label>Please enter new username:</label>
     <input type="text" class="form-control no_focus" id="username">
+    <div class="dropdown">
+      <button onclick="showDropdown()" class="dropbtn dropdown-toggle btn btn-primary" id="privType2">User</button>
+      <div id="privList" class="dropdown-content">
+        <a>User</a><a>Administrator</a>
+      </div>
+    </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary" id="OK" data-dismiss="modal">OK</button>
@@ -195,11 +201,11 @@ $conn = null;
   </div>
   <div class="modal-body">
     <div class="modal-item-list">
-      <label>Please enter username:</label>
+      <label>Enter username:</label>
       <input type="text" class="form-control no_focus" id="username">
     </div>
     <div class="modal-item-list">
-      <label for="pwd">Please enter password:</label>
+      <label for="pwd">Enter password:</label>
       <input type="password" class="form-control no_focus" id="pwd">
     </div>
     <div class="modal-item-list" id="dropdown-group">
@@ -220,6 +226,7 @@ $conn = null;
 <script>
 $('#mainTable').editableTableWidget().numericInputExample();
 </script>
+<script src="js/logout.js"></script>
 
 </body>
 </html>

@@ -34,6 +34,8 @@ ini_set('display_errors', 'on');
   $dbname = "Restaurant";
   if ( isset($_POST["searchPrice1"])) {$price1 = $_POST["searchPrice1"];}
   if ( isset($_POST["searchPrice2"])) {$price2 = $_POST["searchPrice2"];}
+  if ( isset($_POST["searchQuantity1"])) {$quan1 = $_POST["searchQuantity1"];}
+  if ( isset($_POST["searchQuantity2"])) {$quan2 = $_POST["searchQuantity2"];}
 
   try {
       $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -51,15 +53,13 @@ ini_set('display_errors', 'on');
         $tmp = array();
         if (isset( $price1 )) { array_push($tmp, "Price>=$price1"); }
         if (isset( $price2 )) { array_push($tmp, "Price<=$price2"); }
-        // if (isset($_POST["searchPrice1"])) { array_push($tmp, "Price>='".$_POST["searchPrice1"]."'"); }
-        // if (isset($_POST["searchPrice2"])) { array_push($tmp, "Price<='".$_POST["searchPrice2"]."'"); }
         $sql = $sql.implode(' and ', $tmp);
         // echo $sql;
       }
-      else if ( isset($_POST["searchQuantity1"]) || isset($_POST["searchQuantity2"])  ){
+      else if ( isset($quan1) || isset($quan2)  ){
         $tmp = array();
-        if (isset($_POST["searchQuantity1"])) { array_push($tmp, "Quantity>='".$_POST["searchQuantity1"]."'"); }
-        if (isset($_POST["searchQuantity2"])) { array_push($tmp, "Quantity<='".$_POST["searchQuantity2"]."'"); }
+        if (isset( $quan1 )) { array_push($tmp, "Quantity>=$quan1"); }
+        if (isset( $quan2 )) { array_push($tmp, "Quantity<=$quan2"); }
         $sql = $sql.implode(' and ', $tmp);
       }
       else {

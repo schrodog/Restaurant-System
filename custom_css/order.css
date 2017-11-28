@@ -25,6 +25,16 @@ button {
   cursor: pointer;
 }
 
+#data-id-header {
+  display: inline-flex;
+}
+#data-id-header p {
+  font-size: 20px;
+}
+#data-id-header .id-group {
+  margin-right: 15px;
+}
+
 .title {
   padding-left:20px;
   color:white;

@@ -1,0 +1,63 @@
+Code,Name,Price,Quantity,Category
+BG001,Angus Burger,30,600,Burger
+BG002,Chicken Muffin,20,600,Burger
+BG003,Grill Chicken Burger,24,600,Burger
+BG004,Double Cheese & Beef Burger,22,600,Burger
+BG005,Fish Burger,12,600,Burger
+BG006,Sausage Muffin,12,600,Burger
+BG007,Cheeseburger,12,600,Burger
+BG008,Hamburger,12,600,Burger
+BG009,Nugget Burger,18,600,Burger
+BG010,Veggie Burger (No meat),15,600,Burger
+BG011,Mexican Hot Burger,30,600,Burger
+PZ001,Hawaiian Pizza,90,300,Pizza
+PZ002,Margherita Pizza,90,300,Pizza
+PZ003,Pepperoni Passion Pizza,100,300,Pizza
+PZ004,Chicken Deluxe Pizza,100,300,Pizza
+PZ005,Seafood Pizza,80,300,Pizza
+PZ006,Veggie Supreme Pizza,60,300,Pizza
+PZ007,Thousand Island Tuna Pizza,70,300,Pizza
+PZ008,Peri Peri Pizza,90,300,Pizza
+PZ009,American Hot Pizza,90,300,Pizza
+PZ010,Tandoori Hot Pizza,90,300,Pizza
+SD001,Regular Fries,10,9999,Sides
+SD002,Large Fries,12,9999,Sides
+SD003,Garlic Bread,10,5000,Sides
+SD004,Potato Wedge,15,9999,Sides
+SD005,Onion Ring,10,9999,Sides
+SD006,Caesar salad,18,9999,Sides
+SD007,Chicken Cream Soup,16,9999,Sides
+SD008,Napoli Meatball,20,1000,Sides
+SD009,Mashed Potato,18,9999,Sides
+SD010,Spring Roll,14,5000,Sides
+SD011,Coleslaw,12,9999,Sides
+CK001,Grill Chicken Wings,30,1000,Chicken
+CK002,Fried Chicken Wings,30,1000,Chicken
+CK003,BBQ Chicken Wings,40,1000,Chicken
+CK004,Chicken Pops,25,5000,Chicken
+CK005,Chicken Strips,25,5000,Chicken
+CK006,Quarter Grill Chicken,22,1000,Chicken
+CK007,Half Grill Chicken,30,1000,Chicken
+CK008,Whole Grill Chicken,60,1000,Chicken
+CK009,Chizza,50,500,Chicken
+DR001,Cocacola,10,500,Drinks
+DR002,Sprite,10,500,Drinks
+DR003,Fanta Orange Soda,10,500,Drinks
+DR004,Lemon Tea,10,500,Drinks
+DR005,Orange Juice,12,500,Drinks
+DR006,Vanilla Milkshake,13,500,Drinks
+DR007,Chocolate Milkshake,13,500,Drinks
+DR008,Strawberry Milkshake,13,500,Drinks
+DR009,Milktea,15,500,Drinks
+DR010,Coffee,15,500,Drinks
+DR011,Water,10,500,Drinks
+DS001,Original Cheesecake,18,200,Desserts
+DS002,Chocolate Cheesecake,18,200,Desserts
+DS003,Strawberry Cheesecake,18,200,Desserts
+DS004,Tiramisu,24,100,Desserts
+DS005,Original Sundae,15,400,Desserts
+DS006,Chocolate Sundae,15,400,Desserts
+DS007,Strawberry Sundae,15,400,Desserts
+DS008,Apple Pie,10,400,Desserts
+DS009,Corn Pie,10,400,Desserts
+DS010,Yogurt,15,400,Desserts

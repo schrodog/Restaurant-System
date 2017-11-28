@@ -31,7 +31,7 @@
 
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="icon-bar">
-      <?php 
+      <?php
       if ($_SESSION["Privilege"]=="Administrator"){
         echo '<a class="active" href="main_menu-manager.php"><i class="fa fa-home"></i></a>';
       } else {
@@ -42,7 +42,7 @@
     <a type="button" class="btn btn-info active" href="table-management.php">Table</a>
 
     <ul class="title" >Order Review</p></ul>
-    <button type="button" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
+    <button type="button" id="logoutBtn" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
   </nav>
   <!-- Page Content -->
   <div class="container-fluid">
@@ -58,10 +58,12 @@
   <input type="submit" value="abc"/>
 </div>
 </form> -->
-<?php
-echo "MasterOrderID: <p id='data-masterOrderID'>".$_SESSION["MasterOrderID"]."</p><br>" ;
-echo "Table No: <p id='data-tableno'>".$_SESSION["TableNo"]."</p>";
-?>
+<div id="data-id-header">
+  <?php
+  echo "<p class='id-group'>MasterOrderID: <span id='data-masterOrderID'><b>".$_SESSION["MasterOrderID"]."</b></span></p>" ;
+  echo "<p class='id-group'>Table No: <span id='data-tableno'><b>".$_SESSION["TableNo"]."</b></span></p>";
+  ?>
+</div>
 <div class="row  justify-content-md-center">
     <table class="table table-hover table-striped" id="mainTable">
       <thead>
@@ -101,7 +103,7 @@ echo "Table No: <p id='data-tableno'>".$_SESSION["TableNo"]."</p>";
             <td class='no_focus btn_container'><button type='button' class='delBtn btn' style='background-color:transparent'><img src='icon/delete.png'></button></td></tr>";
           }
         }  else {
-          echo "No result found.";
+          // echo "No result found.";
         }
 
         $conn->close();
@@ -179,6 +181,7 @@ echo "Table No: <p id='data-tableno'>".$_SESSION["TableNo"]."</p>";
 <script type="text/javascript">
   calcTotal();
 </script>
+<script src="js/logout.js"></script>
 
 </body>
 </html>

@@ -4,24 +4,19 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <title>Order System</title>
+  <title>Order System</title>
 
-    <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Custom styles for this template -->
-
-    <link href="user-man.css" rel="stylesheet" type="text/css" />
-	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-
-    <script src="lib/jquery-3.2.1.min.js"></script>
+  <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <script src="lib/jquery-3.2.1.min.js"></script>
 <style>
 .container {
   margin-top: 70px;
@@ -72,7 +67,7 @@ body {
 
 	<ul class="title" >Main Menu</p></ul>
 
-  <button type="button" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
+  <button type="button" id="logoutBtn" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
 </nav>
   <!-- Page Content -->
   <div class="container">
@@ -91,6 +86,7 @@ body {
       </div>
     </div>
   </div>
+  <script src="js/logout.js"></script>
 
 </body>
 

@@ -45,14 +45,29 @@ try {
     }
     elseif ($operation=="change_username") {
       $sql = "UPDATE mysql.user SET user='$newName' where user='$username';";
+      if ($privilege=="User"){
+        $sql = $sql."
+        GRANT ALL ON Restaurant.masterorder TO '$username'@'localhost';
+        GRANT SELECT, UPDATE(quantity) ON Restaurant.menu TO '$username'@'localhost';
+        GRANT ALL ON Restaurant.`order` TO '$username'@'localhost';
+        GRANT ALL ON Restaurant.report TO '$username'@'localhost';
+        GRANT SELECT, UPDATE(Available) ON Restaurant.`table` TO '$username'@'localhost';
+        GRANT SELECT(StaffID,password), UPDATE(PassWord) ON Restaurant.staff TO '$username'@'localhost';
+        FLUSH PRIVILEGES; ";
+      } elseif ($privilege=="Administrator") {
+        $sql = $sql."
+        GRANT ALL ON *.* TO '$username'@'localhost' WITH GRANT OPTION;
+        GRANT CREATE USER ON *.* TO '$username'@'localhost' WITH GRANT OPTION;
+        FLUSH PRIVILEGES;";
+      }
       $conn->exec($sql);
     }
     elseif ($operation=="change_password") {
-      $sql = "set password for '$username'@'localhost'= '$newPwd'; ";
+      $sql = "set password for '$username'@'localhost'= '$newPwd';  FLUSH PRIVILEGES;";
       $conn->exec($sql);
     }
     elseif ($operation=="view_password") {
-      $sql = "SELECT PassWord from staff where `UserName`='$username'; ";
+      $sql = "SELECT PassWord from staff where `UserName`='$username';  FLUSH PRIVILEGES;";
       $stmt = $conn->prepare($sql);
       $stmt->execute();
       $stmt->setFetchMode(PDO::FETCH_ASSOC);

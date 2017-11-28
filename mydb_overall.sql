@@ -149,8 +149,18 @@ ALTER TABLE `masterorder` AUTO_INCREMENT = 1;
 DELETE FROM `order`;
 ALTER TABLE `order` AUTO_INCREMENT = 1;
 
+-- Administrator --
+CREATE USER '$username'@'localhost' IDENTIFIED BY '$password';
+GRANT ALL ON Restaurant.masterorder TO '$username'@'localhost';
+GRANT SELECT, UPDATE(quantity) ON Restaurant.menu TO '$username'@'localhost';
+GRANT ALL ON Restaurant.`order` TO '$username'@'localhost';
+GRANT ALL ON Restaurant.report TO '$username'@'localhost';
+GRANT SELECT, UPDATE(Available) ON Restaurant.`table` TO '$username'@'localhost';
+GRANT SELECT(StaffID,password), UPDATE(PassWord) ON Restaurant.staff TO '$username'@'localhost';
+FLUSH PRIVILEGES;
 
-
-
-
-
+-- User --
+CREATE USER '$username'@'localhost' IDENTIFIED BY '$password';
+GRANT ALL ON *.* TO '$username'@'localhost' WITH GRANT OPTION;
+GRANT CREATE USER ON *.* TO '$username'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;

@@ -52,7 +52,7 @@ if ($privilege=="User") {
        ?>
     </div>
     <ul class="title" >Table Menu</p></ul>
-    <button type="button" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
+    <button type="button" id="logoutBtn" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
   </nav>
   <!-- Page Content -->
   <div class="container-fluid">
@@ -238,6 +238,7 @@ if ($privilege=="Administrator"){
   </script>";
 }
 ?>
+<script src="js/logout.js"></script>
 
 </body>
 </html>

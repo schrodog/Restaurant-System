@@ -33,7 +33,7 @@ session_start();
       <a class="active" href="main_menu-manager.php"><i class="fa fa-home"></i></a>
     </div>
     <ul class="title" >Food Menu</p></ul>
-    <button type="button" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
+    <button type="button" id="logoutBtn" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
   </nav>
   <!-- Page Content -->
   <div class="container-fluid">
@@ -219,6 +219,6 @@ refresh_buttons();
 <script src="js/menu-management-editableTable.js"></script>
 
 <script>$('#mainTable').editableTableWidget().numericInputExample();</script>
-
+<script src="js/logout.js"></script>
 </body>
 </html>

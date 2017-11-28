@@ -36,10 +36,10 @@ $.fn.numericInputExample = function () {
 			var tmp = parseInt(value);
 			return !isNaN(tmp) && tmp<1000;
 		} else if (column == 3) {
-			// return !isNaN(parseFloat(value)) && isFinite(value); 
+			// return !isNaN(parseFloat(value)) && isFinite(value);
 				return (value == parseInt(value,10));
 				// alert('Only integral value is allowed.');
-			
+
 			// var re = /^[a-zA-Z@_#$%-.]+$/g;
 			// return !!value && value.trim().length > 0 && !!value.match(re);
 		} else if (column == 5) {
@@ -147,14 +147,14 @@ $(document).ready(function(){
 			pwd = $("#addUserModal #pwd").val();
 			priv = $("#addUserModal #privType").text();
 			// console.log(add_name+' '+add_pwd);
-			
+
 			if (username=="" || pwd==""){
 				alert("Please fill in all the fields!");
 				$("#addUserModal").one('hidden.bs.modal',function(){
 					$("#addUserModal").modal('show');
 				});
 				// $("#addUserModal").modal('hide');
-				
+
 			} else {
 				addUser();
 			}
@@ -181,7 +181,7 @@ $(document).ready(function(){
 		var thisRow = $(this).parent().parent();
 		keyID = thisRow.find("td").first().text();
 		username = thisRow.find("td:nth-child(5)").text();
-		
+
 		$("#accountModal").modal('show');
 		$("#newPwd").click(function(){
 			newPwd();
@@ -193,7 +193,7 @@ $(document).ready(function(){
 			viewPassword();
 		});
 	});
-	
+
 	$("#privList a").click(function(){
 		var txt = $(this).text();
 		$(".dropdown #privType").text(txt);
@@ -240,25 +240,28 @@ function newPwd(){
 			data: { "operation": "change_password", "username":username, "newPwd":pwd},
 			success: function(data, txt, jqxhr){
 				alert(data);
+				window.location.href = "user-management.php";
 			}
 		}).fail(function(xhr, status, error){
 			alert(error);
 		});
 	});
-	
+
 }
 
 function changeUser(){
 	$('#accountModal').modal('hide');
 	$("#changeUserModal").modal('show');
 	$("#changeUserModal #username").val('');
+
 	// console.log('keyID:'+keyID);
-	
+
 	$("#changeUserModal #OK").click(function(){
 		var newName = $("#changeUserModal #username").val();
+		var privilege = $("#changeUserModal #privType2").text();
 		// console.log("newName:"+newName);
 		// console.log("oldName:"+username);
-		
+
 		// change username in staff table
 		$.ajax({
 			type: "POST",
@@ -274,14 +277,15 @@ function changeUser(){
 		$.ajax({
 			type: "POST",
 			url: "tools/account_management.php",
-			data: { "operation": "change_username", "newName":newName, "username":username },
+			data: { "operation": "change_username", "newName":newName, "username":username,"privilege":privilege },
 			success: function(data, txt, jqxhr){
 				// alert(data);
+				window.location.href = "user-management.php";
 			}
 		}).fail(function(xhr, status, error){
 			alert(error);
 		});
-		
+
 	});
 }
 
@@ -302,7 +306,7 @@ function viewPassword(){
 }
 
 function addUser(){
-	
+
 	// console.log(username+','+pwd+','+priv);
 	$.ajax({
 		type: "POST",
@@ -318,7 +322,7 @@ function addUser(){
 		url: "tools/account_management.php",
 		data: { "operation": "add_user", "username":username, "password":pwd, "privilege":priv},
 		success: function(data, txt, jqxhr){
-			window.location.href = "user-management.php"
+			window.location.href = "user-management.php";
 		}
 	}).fail(function(xhr, status, error){
 		alert(error);

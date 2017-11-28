@@ -30,13 +30,13 @@ $(document).ready(function () {
   $("body").on('click','.delBtn',function(){
     var thisRow = $(this).parent().parent();
     var delID = thisRow.find("td").first().text();
-    
+
     // console.log('delID:'+delID);
-    // 
+    //
     // $("#deleteModal").modal('show');
-		// 
+		//
     // $("#deleteModal #OK").one('click',function(){
-    
+
     if (confirm("Are you sure to delete?") == true){
       $.ajax({
         type: "POST",
@@ -51,11 +51,11 @@ $(document).ready(function () {
       }).fail(function(xhr, status, error){
         alert(error);
       });
-     
+
     }
 		// });
   });
-  
+
   $(".change-group #paid").on('change',function(){
     calcTotal();
     var total = Number( $(".total-calc #total").val());
@@ -65,11 +65,13 @@ $(document).ready(function () {
   });
 
   $('body').on('click','#confirmOrderBtn',function(){
-    var masterOrderID = $("#data-masterOrderID").text().replace(/\n/g,'') ;
-    var tableNo = $("#data-tableno").text().replace(/\n/g,'') ;
-		// $("#checkoutModal").modal('show');
-		// console.log('delID:'+delID);
-		// $("#checkoutModal #OK").one('click',function(){
+    var r = confirm("Are you sure to check out?");
+    if ( r ==true){
+      var masterOrderID = $("#data-masterOrderID").text().replace(/\n/g,'') ;
+      var tableNo = $("#data-tableno").text().replace(/\n/g,'') ;
+      // $("#checkoutModal").modal('show');
+      // console.log('delID:'+delID);
+      // $("#checkoutModal #OK").one('click',function(){
       // var payment = $("#checkoutModal #payment").val();
       // var change = $("#checkoutModal #change").val();
       var d = new Date();
@@ -77,32 +79,35 @@ $(document).ready(function () {
       var price = $(".total-calc #total").val();
       var paid = $(".change-group #paid").val();
       var change = $(".change-group #change").val();
-      
+
       // console.log(timeStr+","+price+","+paid+","+change+","+masterOrderID);
       console.log(tableNo);
-			$.ajax({
-				type: "POST",
-				url: "tools/update.php",
-				data: { "operation":"update","target_table":"masterorder","valueList":[[paid,change,price,timeStr]],"idName":"masterOrderID","idList":[masterOrderID],"headerList":["Payment","Change","Price","CheckOut Time"]},
-				success: function(data, txt, jqxhr){
-					// alert(data);
-				}
-			}).fail(function(xhr, status, error){
-				alert(error);
-			});
-		  
       $.ajax({
         type: "POST",
-				url: "tools/update.php",
-				data: { "operation":"update","target_table":"table","valueList":[['Y']],"idName":"TableNo","idList":[tableNo],"headerList":["Available"]},
-				success: function(data, txt, jqxhr){
-					// alert(data);
-          window.location = "table-management.php";
-				}
-			}).fail(function(xhr, status, error){
-				alert(error);
+        url: "tools/update.php",
+        data: { "operation":"update","target_table":"masterorder","valueList":[[paid,change,price,timeStr]],"idName":"masterOrderID","idList":[masterOrderID],"headerList":["Payment","Change","Price","CheckOut Time"]},
+        success: function(data, txt, jqxhr){
+          // alert(data);
+        }
+      }).fail(function(xhr, status, error){
+        alert(error);
       });
-    });
+
+      $.ajax({
+        type: "POST",
+        url: "tools/update.php",
+        data: { "operation":"update","target_table":"table","valueList":[['Y']],"idName":"TableNo","idList":[tableNo],"headerList":["Available"]},
+        success: function(data, txt, jqxhr){
+          // alert(data);
+          window.location = "table-management.php";
+        }
+      }).fail(function(xhr, status, error){
+        alert(error);
+      });
+    }
+  });
+
+
 
 
 });

@@ -29,7 +29,7 @@ session_start();
 
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="icon-bar">
-      <?php 
+      <?php
       if ($_SESSION["Privilege"]=="Administrator"){
         echo '<a class="active" href="main_menu-manager.php"><i class="fa fa-home"></i></a>';
       } else {
@@ -38,7 +38,7 @@ session_start();
        ?>
     </div>
     <ul class="title" >Food Menu</p></ul>
-    <button type="button" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
+    <button type="button" id="logoutBtn" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
   </nav>
   <!-- Page Content -->
   <div class="container-fluid">
@@ -167,5 +167,7 @@ refresh_buttons();
 
 </script>
 <script src="js/menu.js"></script>
+<script src="js/logout.js"></script>
+
 </body>
 </html>
