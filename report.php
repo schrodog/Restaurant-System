@@ -9,7 +9,7 @@
     <title>Restaurant System</title>
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"> -->
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
     <link href="custom_css/report.css" rel="stylesheet" type="text/css" />
 
     <script src="lib/jquery-3.2.1.min.js"></script>
@@ -34,6 +34,7 @@
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form> -->
 
+    <button type="button" id="updateBtn" class="btn btn-info"> Update Report </button>
     <button type="button" id="logoutBtn" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
   </nav>
 </header>
@@ -268,24 +269,26 @@ $conn = null;
     </div>
 </footer>
 
-<!-- <div id="deleteModal" class="modal fade" role="dialog">
+<div id="updateModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Warning</h4>
+        <h4 class="modal-title">Update Report</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      <div class="modal-body">
-        <p>Are you sure to delete this row?</p>
+      <div class="modal-body" style="display: inline-flex;">
+        <span>Update since last</span>
+        <input type="number" min="0" class="form-control no_focus" id="days-before" value="1">
+        <span>day(s)</span>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="OK" data-dismiss="modal">OK</button>
+        <button type="button" class="btn btn-primary" id="OK" data-dismiss="modal">Update</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>
 </div>
--->
+
 <script type='text/javascript'>calcTotal();</script>
 <script src="js/logout.js"></script>
 

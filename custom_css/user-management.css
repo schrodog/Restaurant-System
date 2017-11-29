@@ -137,6 +137,9 @@ footer > .container {
 .modal-content #privType {
 	margin-left: 12px;
 }
+#changeUserModal #username {
+	margin-bottom: 10px;
+}
 
 
 .dropbtn {

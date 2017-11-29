@@ -44,21 +44,27 @@ try {
         $conn->exec($sql);
     }
     elseif ($operation=="change_username") {
-      $sql = "UPDATE mysql.user SET user='$newName' where user='$username';";
+      $sql = "set SQL_SAFE_UPDATES = 0;
+      UPDATE mysql.user SET user='$newName' where user='$username';
+      FLUSH PRIVILEGES;";
       if ($privilege=="User"){
         $sql = $sql."
-        GRANT ALL ON Restaurant.masterorder TO '$username'@'localhost';
-        GRANT SELECT, UPDATE(quantity) ON Restaurant.menu TO '$username'@'localhost';
-        GRANT ALL ON Restaurant.`order` TO '$username'@'localhost';
-        GRANT ALL ON Restaurant.report TO '$username'@'localhost';
-        GRANT SELECT, UPDATE(Available) ON Restaurant.`table` TO '$username'@'localhost';
-        GRANT SELECT(StaffID,password), UPDATE(PassWord) ON Restaurant.staff TO '$username'@'localhost';
+        GRANT ALL ON Restaurant.masterorder TO '$newName'@'localhost';
+        GRANT SELECT, UPDATE(quantity) ON Restaurant.menu TO '$newName'@'localhost';
+        GRANT ALL ON Restaurant.`order` TO '$newName'@'localhost';
+        GRANT ALL ON Restaurant.report TO '$newName'@'localhost';
+        GRANT SELECT, UPDATE(Available) ON Restaurant.`table` TO '$newName'@'localhost';
+        GRANT SELECT(StaffID,password), UPDATE(PassWord) ON Restaurant.staff TO '$newName'@'localhost';
+        DROP USER '$username'@'localhost';
+        set SQL_SAFE_UPDATES = 1;
         FLUSH PRIVILEGES; ";
       } elseif ($privilege=="Administrator") {
         $sql = $sql."
-        GRANT ALL ON *.* TO '$username'@'localhost' WITH GRANT OPTION;
-        GRANT CREATE USER ON *.* TO '$username'@'localhost' WITH GRANT OPTION;
-        FLUSH PRIVILEGES;";
+        GRANT ALL ON *.* TO '$newName'@'localhost' WITH GRANT OPTION;
+        GRANT CREATE USER ON *.* TO '$newName'@'localhost' WITH GRANT OPTION;
+        DROP USER '$username'@'localhost';
+        set SQL_SAFE_UPDATES = 1;
+        FLUSH PRIVILEGES; ";
       }
       $conn->exec($sql);
     }

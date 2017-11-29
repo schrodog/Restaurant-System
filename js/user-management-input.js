@@ -114,9 +114,9 @@ $(document).ready(function(){
 				url: "tools/update.php",
 				data: { "valueList": updateData,"target_table":"staff","headerList": header,"idList":idChange,"idName":"staffID", "operation": "update"},
 				success: function(data, txt, jqxhr){
-					alert(data);
-					// alert("You have successfully updated.");
+					// alert(data);
 					idChange=[];
+					alert("You have successfully updated.");
 				}
 			}).done(function(msg){
 				// console.log("done");
@@ -198,6 +198,11 @@ $(document).ready(function(){
 		var txt = $(this).text();
 		$(".dropdown #privType").text(txt);
 	});
+	$("#privList2 a").click(function(){
+		var txt = $(this).text();
+		$(".dropdown #privType2").text(txt);
+	});
+
 	/* leave dropdown when click outside */
 	window.onclick = function(event) {
 		if (!event.target.matches('.dropbtn')) {
@@ -228,7 +233,7 @@ function newPwd(){
 			url: "tools/update.php",
 			data: { "operation": "update","target_table":"staff","idName":"staffID","idList":[keyID],"headerList":["PassWord"],"valueList":[[pwd]]},
 			success: function(data, txt, jqxhr){
-				alert(data);
+				// alert(data);
 			}
 		}).fail(function(xhr, status, error){
 			alert(error);
@@ -239,8 +244,9 @@ function newPwd(){
 			url: "tools/account_management.php",
 			data: { "operation": "change_password", "username":username, "newPwd":pwd},
 			success: function(data, txt, jqxhr){
-				alert(data);
+				// alert(data);
 				window.location.href = "user-management.php";
+				alert('New Password is set.');
 			}
 		}).fail(function(xhr, status, error){
 			alert(error);
@@ -279,8 +285,8 @@ function changeUser(){
 			url: "tools/account_management.php",
 			data: { "operation": "change_username", "newName":newName, "username":username,"privilege":privilege },
 			success: function(data, txt, jqxhr){
-				// alert(data);
 				window.location.href = "user-management.php";
+				alert('User profile is changed.');
 			}
 		}).fail(function(xhr, status, error){
 			alert(error);
@@ -334,7 +340,7 @@ function deleteUser(){
 	$.ajax({
 		type: "POST",
 		url: "tools/update.php",
-		data: { "operation": "delete","target_table":"staff","valueList":[delID],"idName":"StaffID"},
+		data: { "operation": "delete","target_table":"staff","valueList":[delID],"idName":"StaffID","override":"1"},
 		success: function(data, txt, jqxhr){
 			// alert(data);
 		}
@@ -346,7 +352,8 @@ function deleteUser(){
 		url: "tools/account_management.php",
 		data: { "operation": "delete_user", "username":username },
 		success: function(data, txt, jqxhr){
-			window.location.href = "user-management.php"
+			// alert(data);
+			window.location = "user-management.php";
 		}
 	}).fail(function(xhr, status, error){
 		alert(error);
@@ -357,7 +364,9 @@ function deleteUser(){
 function showDropdown(){
 	$(".dropdown #privList").toggle();
 }
-
+function showDropdown2(){
+	$(".dropdown #privList2").toggle();
+}
 
 
 function GoHome(link){

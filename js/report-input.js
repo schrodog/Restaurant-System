@@ -17,7 +17,7 @@ function calcTotal(){
 	} else if (op=='2' || op=='3') {
 		index = 2;
 	}
-	
+
 	$("#mainTable tr td:nth-child("+index+")").each(function(){
 		total += Number($(this).text());
 	});
@@ -133,6 +133,16 @@ $(document).ready(function(){
 		});
 	});
 
+	// update report
+	$("#updateBtn").click(function(){
+		$("#updateModal").modal('show');
+		$("#updateModal #OK").click(function(){
+			var days = $("#updateModal #days-before").val();
+			$("#updateModal").modal('hide');
+			updateReport(days);
+		});
+	});
+
 });
 
 function refreshPage(){
@@ -173,7 +183,11 @@ function showDropdown(n){
 	}
 }
 
-
+function updateReport(day){
+	var days = Number(day);
+	// console.log(days+1);
+	
+}
 
 // Close the dropdown menu if the user clicks outside of it
 function GoHome(link){

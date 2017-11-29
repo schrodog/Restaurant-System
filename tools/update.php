@@ -31,7 +31,7 @@ try {
         if(isset($_POST["override"])) { $sql = "SET SQL_SAFE_UPDATES=0; SET FOREIGN_KEY_CHECKS=0;".$sql." SET SQL_SAFE_UPDATES=1; SET FOREIGN_KEY_CHECKS=1;"; }
 
         $stmt = $conn->prepare($sql);
-        echo $sql;
+        // echo $sql;
         foreach ($valueList as $index=>$value) {
             $value2 = array_map(function($val){
               return $val === "" ? NULL : $val;
@@ -77,7 +77,7 @@ try {
         if(isset($_POST["override"])) { $sql = "SET SQL_SAFE_UPDATES=0; SET FOREIGN_KEY_CHECKS=0; ".$sql." SET SQL_SAFE_UPDATES=1; SET FOREIGN_KEY_CHECKS=1;"; }
 
         $conn->exec($sql);
-        echo $sql;
+        // echo $sql;
         // echo $valueList." deleted successfully";
     }
 

@@ -184,3 +184,9 @@ span.stat {
   position: absolute;
 }
 
+.modal-body span {
+  padding: 10px;
+}
+#updateModal input {
+  width: 150px;
+}

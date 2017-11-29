@@ -181,9 +181,10 @@ $conn = null;
   <div class="modal-body">
     <label>Please enter new username:</label>
     <input type="text" class="form-control no_focus" id="username">
+    <label>Choose privilege type: </label>
     <div class="dropdown">
-      <button onclick="showDropdown()" class="dropbtn dropdown-toggle btn btn-primary" id="privType2">User</button>
-      <div id="privList" class="dropdown-content">
+      <button onclick="showDropdown2()" class="dropbtn dropdown-toggle btn btn-primary" id="privType2">User</button>
+      <div id="privList2" class="dropdown-content">
         <a>User</a><a>Administrator</a>
       </div>
     </div>
