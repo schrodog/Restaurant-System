@@ -149,18 +149,44 @@ ALTER TABLE `masterorder` AUTO_INCREMENT = 1;
 DELETE FROM `order`;
 ALTER TABLE `order` AUTO_INCREMENT = 1;
 
--- Administrator --
+-- User --
 CREATE USER '$username'@'localhost' IDENTIFIED BY '$password';
 GRANT ALL ON Restaurant.masterorder TO '$username'@'localhost';
 GRANT SELECT, UPDATE(quantity) ON Restaurant.menu TO '$username'@'localhost';
 GRANT ALL ON Restaurant.`order` TO '$username'@'localhost';
 GRANT ALL ON Restaurant.report TO '$username'@'localhost';
 GRANT SELECT, UPDATE(Available) ON Restaurant.`table` TO '$username'@'localhost';
-GRANT SELECT(StaffID,password), UPDATE(PassWord) ON Restaurant.staff TO '$username'@'localhost';
+GRANT SELECT(StaffID,password,UserName), UPDATE(PassWord) ON Restaurant.staff TO '$username'@'localhost';
 FLUSH PRIVILEGES;
 
--- User --
+-- Administrator --
 CREATE USER '$username'@'localhost' IDENTIFIED BY '$password';
 GRANT ALL ON *.* TO '$username'@'localhost' WITH GRANT OPTION;
 GRANT CREATE USER ON *.* TO '$username'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
+
+-- stored procedure for report update --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_report`(p1 int, staffID int(11))
+BEGIN
+
+declare income int;
+declare n int;
+declare date_var date;
+declare i int default 0;
+
+set i=0;
+while i<p1 do
+  select sum(price), count(*), `CheckOut Date`
+  into income,n, date_var
+  from masterorder 
+  where `CheckOut Date` = date_add(curdate(), interval -p1+i+1 day);
+  
+  if (select exists(select 1 from `report` where `Date`=date_var))=1 then
+	update report set `Count`=n, `Date`=date_var, `Income`=income, `StaffID`=staffID where `Date`=date_var;
+	else 
+		insert into report (`Count`,`Date`,`Income`,`StaffID`) VALUES (n,date_var,income, staffID);
+  end if;
+  set i=i+1;
+end while;
+
+END

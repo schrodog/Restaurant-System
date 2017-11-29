@@ -184,9 +184,20 @@ function showDropdown(n){
 }
 
 function updateReport(day){
-	var days = Number(day);
+	var days = parseInt(day,10);
 	// console.log(days+1);
-	
+	$.ajax({
+		type: "POST",
+		url: "tools/update_report.php",
+		data: {"days": days },
+		success: function(data, txt, jqxhr){
+			refreshPage();
+			// alert(data);
+			// alert('Report updated.');
+		}
+	}).fail(function(xhr, status, error){
+		alert(error);
+	});	
 }
 
 // Close the dropdown menu if the user clicks outside of it
