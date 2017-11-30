@@ -39,6 +39,7 @@
   </nav>
 </header>
 <?php
+session_start();
 if (isset($_GET["dr"])) {
   $dateRange = $_GET["dr"];
 } else {
@@ -49,6 +50,7 @@ if (isset($_GET["op"])){
 } else {
   $operation = "1";
 }
+$_SESSION["operation"] = $operation;
 echo "<p id='data-op' style='display:none'>$operation</p>";
 if ($operation=="1"){
   echo "<h2>Daily Report</h2>";
@@ -58,7 +60,6 @@ if ($operation=="1"){
   echo "<h2>Yearly Report</h2>";
 }
 
-session_start();
 $_SESSION["dateRange"] = $dateRange;
  ?>
 <!-- Time range show -->
@@ -265,6 +266,7 @@ $conn = null;
           <span class="stat text-primary">Total Number of Bills: <b><span id="billTotal"></span></b></span>
           <span class="stat text-success">Total Income: <b><span id="incomeTotal"></span></b></span>
         </div>
+        <a type="button" class="btn btn-primary" id="viewIncomeBtn" href="line-chart.php" target="_blank">View income</a>
         <button type="button" class="btn btn-primary" id="viewOrderBtn">View order count</button>
     </div>
 </footer>

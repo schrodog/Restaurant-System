@@ -41,8 +41,8 @@ h2 {
 }
 
 #mainTable td button {
-	padding-left: 0;
-	padding-right: 0;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 #mainTable td button img{

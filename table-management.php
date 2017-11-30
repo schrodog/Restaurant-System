@@ -51,6 +51,7 @@ if ($privilege=="User") {
       }
        ?>
     </div>
+    <a type="button " class="btn btn-warning " href="management_menu.php" style="margin-left:20px;">Back</a>
     <ul class="title" >Table Menu</p></ul>
     <button type="button" id="logoutBtn" class="btn btn-warning"><img src="icon/log-out.svg"> Logout </button>
   </nav>

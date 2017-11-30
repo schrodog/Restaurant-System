@@ -50,11 +50,53 @@ $(document).ready(function(){
 			alert(error);
 		});
 	});
-  
+
+  // search function
+  $(".search-block #searchCode").on('keyup',function(){
+    var text=$(this).val();
+    console.log('code:'+text);
+    $(this).siblings().not($(this)).val('');
+    if (text!=''){$("#mainTable tbody").load("tools/refreshMenu.php", {"foodCode":text,"skip":"1"});}
+  });
+  $(".search-block #searchName").on('keyup',function(){
+    var text=$(this).val();
+    $(this).siblings().not($(this)).val('');
+    console.log('name:'+text);
+    if (text!=''){$("#mainTable tbody").load("tools/refreshMenu.php", {"searchName":text,"skip":"1"});}
+  });
+  $(".search-block .price").on('keyup',function(){
+    $(this).siblings().not($(".price")).val('');
+    var text1 = Number($(".search-block #searchPrice1").val());
+    var text2 = Number($(".search-block #searchPrice2").val());
+    // console.log('price1:'+text1+"2:"+text2);
+    if (text1!='' && text2=='' && !isNaN(text1)){
+      $.post("tools/refreshMenu.php", {"searchPrice1":text1,"skip":"1"}, function(data){ $("#mainTable tbody").html(data) });
+    } else if (text1=='' && text2!='' && !isNaN(text2)){
+      $.post("tools/refreshMenu.php", {"searchPrice2":text2,"skip":"1"}, function(data){ $("#mainTable tbody").html(data) });
+    } else if (text1!='' && text2!='' && !isNaN(text1)  && !isNaN(text2)){
+      $.post("tools/refreshMenu.php", {"searchPrice1":text1,"searchPrice2":text2,"skip":"1" }, function(data){ $("#mainTable tbody").html(data) });
+    }
+  });
+
+  $(".search-block .quan").on('keyup',function(){
+    $(this).siblings().not($(".quan")).val('');
+    var text3 = Number($(".search-block #searchQuantity1").val());
+    var text4 = Number($(".search-block #searchQuantity2").val());
+    // console.log('quantity1:'+text);
+    if (text3!='' && text4=='' && !isNaN(text3)){
+      $.post("tools/refreshMenu.php", {"searchQuantity1":text3,"skip":"1"}, function(data){ $("#mainTable tbody").html(data) });
+    } else if (text3=='' && text4!='' && !isNaN(text4)){
+      $.post("tools/refreshMenu.php", {"searchQuantity2":text4,"skip":"1"}, function(data){ $("#mainTable tbody").html(data) });
+    } else if (text3!='' && text4!='' && !isNaN(text3)  && !isNaN(text4)){
+      $.post("tools/refreshMenu.php", {"searchQuantity1":text3,"searchQuantity2":text4,"skip":"1" }, function(data){ $("#mainTable tbody").html(data) });
+    }
+  });
+
+
   $("#saveOrderBtn").click(function(){
     var result = [], tmp=[];
     var masterOrderID = document.head.querySelector("[name=data-masterOrderID]").content.replace(/\n/g,"");
-    
+
     $("#orderBlock .card-block p.summary-group").each(function(){
       tmp=[];
       $(this).find("input").each(function(){
@@ -67,7 +109,7 @@ $(document).ready(function(){
       tmp.push(masterOrderID);
       result.push(tmp);
     });
-    
+
     // result.forEach(function(value){
     //   console.log(value);
     // });
@@ -82,7 +124,7 @@ $(document).ready(function(){
     }).fail(function(xhr, status, error){
 			alert(error);
 		});
-    
+
   });
 
 });

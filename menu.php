@@ -46,14 +46,28 @@ session_start();
     <br><br>
 
     <div class="row justify-content-md-center" id="right-part">
+      <div class="search-block">
+        <label>Search: </label>
+        <input type="text" id="searchCode" placeholder="Food Code" class="no_focus">
+        <input type="text" id="searchName" placeholder="Food Name" class="no_focus">
+        <span class="price-group">
+          <input type="text" id="searchPrice1" placeholder="Price" class="no_focus price">-
+          <input type="text" id="searchPrice2" placeholder="Price" class="no_focus price">
+        </span><span class="quan-group">
+        <input type="text" id="searchQuantity1" placeholder="Quanity" class="no_focus quan">-
+        <input type="text" id="searchQuantity2" placeholder="Quanity" class="no_focus quan">
+        </span>
+        <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+      </div>
+
         <table class="table table-dark table-hover" id="mainTable">
           <thead>
             <tr>
-              <th>Code</th>
-              <th>Food Name</th>
-              <th>Price ($)</th>
-              <th>Quantity</th>
-              <th class="test">Category</th>
+              <th onclick="columnSort(0)" value="0">Code</th>
+              <th onclick="columnSort(1)" value="0">Food Name</th>
+              <th onclick="columnSort(2)" value="0">Price ($)</th>
+              <th onclick="columnSort(3)" value="0">Quantity</th>
+              <th class="test" onclick="columnSort(4)" value="0">Category</th>
             </tr>
           </thead>
           <tbody id="menu">
@@ -135,37 +149,38 @@ session_start();
 <script>
 //Search bar AND Side bar
 $(document).ready(function () {
-  var table = $('.table').DataTable();
+  // var table = $('.table').DataTable();
 });
 //   $('#button1').on('click',function(){
 //     table.search("Burger").draw();
 //   });
 
 function refresh_buttons(){
-$.ajax({
-  type     : "POST",
-  url      : "tools/select_category.php",
-  success  : function(data) {
-    set_buttons(JSON.parse(data));
-  }
-}).fail(function(xhr, status, error){
-	alert(error);
-});
-
-function set_buttons(data){
-  $("#typeBtnList").empty();
-  data.forEach(function(row){
-    row.forEach(function(value){
-      // var str = "'"+value+"'";
-      // $("#typeBtnList").append('<button class="btn btn-primary type-btn" onclick="changeType('+str+')"><p>'+value+'</p></button>');
-      $("#typeBtnList").append('<a class="btn btn-primary type-btn" ><p>'+value+'</p></a>');
-    });
+  $.ajax({
+    type     : "POST",
+    url      : "tools/select_category.php",
+    success  : function(data) {
+      set_buttons(JSON.parse(data));
+    }
+  }).fail(function(xhr, status, error){
+  	alert(error);
   });
-}
+
+  function set_buttons(data){
+    $("#typeBtnList").empty();
+    data.forEach(function(row){
+      row.forEach(function(value){
+        // var str = "'"+value+"'";
+        // $("#typeBtnList").append('<button class="btn btn-primary type-btn" onclick="changeType('+str+')"><p>'+value+'</p></button>');
+        $("#typeBtnList").append('<a class="btn btn-primary type-btn" ><p>'+value+'</p></a>');
+      });
+    });
+  }
 }
 refresh_buttons();
 
 </script>
+<script src="js/table-sort.js"></script>
 <script src="js/menu.js"></script>
 <script src="js/logout.js"></script>
 

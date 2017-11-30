@@ -53,16 +53,21 @@
 	<style>
 		canvas {
 			width: auto;
-			height: 100vh;
+			height: 100%;
 		}
-
+		a {
+			background: #69c;
+			color: #fff;
+			padding: 5px 10px;
+			cursor: pointer;
+		}
 	</style>
 
 </head>
 <body>
 
 <div class="container">
-	<canvas id="myChart" width="200" height="200"></canvas>
+	<canvas id="myChart"></canvas>
 </div>
 
 <?php
@@ -111,8 +116,24 @@ $conn = null;
 ?>
 
 <script>
-// resize canvas to 100%
-	$("canvas").css({width: '', height: ''});
+	var srcCanvas = document.querySelector('canvas');
+	var link = document.createElement('a');
+	    link.innerHTML = 'download image';
+			link.addEventListener('click', function(ev) {
+				var destinationCanvas = document.createElement("canvas");
+				destinationCanvas.width = srcCanvas.width;
+				destinationCanvas.height = srcCanvas.height;
+
+				var destCtx = destinationCanvas.getContext('2d');
+				//create a rectangle with the desired color
+				destCtx.fillStyle = "#FFFFFF";
+				destCtx.fillRect(0,0,srcCanvas.width,srcCanvas.height);
+				//draw the original canvas onto the destination canvas
+				destCtx.drawImage(srcCanvas, 0, 0);
+				link.href = destinationCanvas.toDataURL();
+	    	link.download = "order_1.png";
+	}, false);
+	document.body.appendChild(link);
 </script>
 
 </body>

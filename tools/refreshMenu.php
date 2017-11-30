@@ -23,7 +23,11 @@ ini_set('display_errors', 'on');
           echo "<tr>";
       }
       function endChildren(){
-          echo "<td class='no_focus'><button type='button' class='delBtn btn' style='background-color:transparent'><img src='icon/delete.png'></button></td></tr>\n";
+          if (isset($_POST["skip"])){
+            echo "<tr>";
+          } else {
+            echo "<td class='no_focus'><button type='button' class='delBtn btn' style='background-color:transparent'><img src='icon/delete.png'></button></td></tr>";
+          }
           //style='background-color:transparent' <img src='icon/key.png'/>
       }
   }

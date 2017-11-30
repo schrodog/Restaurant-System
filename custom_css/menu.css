@@ -56,7 +56,20 @@ nav {
 }
 
 
-
+.search-block {
+	padding: 5px 70px 5px 0;
+	display: inline-flex;
+	margin-bottom: 30px;
+}
+.search-block input {
+	margin: 0 5px;
+}
+.search-block .price, .search-block .quan {
+	width: 100px;
+}
+.search-block #searchCode, .search-block #searchName {
+	width: 150px;
+}
 
 .container-fluid{
 		padding-top:0%;
@@ -69,6 +82,13 @@ nav {
 		/*position: absolute;*/
 		font-size:20px;
 }
+.table tr {
+	cursor: pointer;
+}
+/*.table-dark>tbody>tr:nth-child(odd)>td,
+.table-dark>tbody>tr:nth-child(odd)>th {
+   background-color: #666;
+ }*/
 
 
 @media (min-width: 992px) {

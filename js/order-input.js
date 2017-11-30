@@ -79,13 +79,13 @@ $(document).ready(function () {
       var price = $(".total-calc #total").val();
       var paid = $(".change-group #paid").val();
       var change = $(".change-group #change").val();
-
+      var staffID = document.querySelector("meta[name='staffID']").getAttribute("content").replace('\n','');
       // console.log(timeStr+","+price+","+paid+","+change+","+masterOrderID);
-      console.log(tableNo);
+      // console.log('staff'+staffID);
       $.ajax({
         type: "POST",
         url: "tools/update.php",
-        data: { "operation":"update","target_table":"masterorder","valueList":[[paid,change,price,timeStr]],"idName":"masterOrderID","idList":[masterOrderID],"headerList":["Payment","Change","Price","CheckOut Time"]},
+        data: { "operation":"update","target_table":"masterorder","valueList":[[paid,change,price,timeStr,staffID]],"idName":"masterOrderID","idList":[masterOrderID],"headerList":["Payment","Change","Price","CheckOut Time,staffID"]},
         success: function(data, txt, jqxhr){
           // alert(data);
         }

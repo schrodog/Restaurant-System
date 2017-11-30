@@ -7,6 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <?php
+  session_start();
+  echo '<meta name="staffID" content="'.$_SESSION["StaffID"].'">';
+  ?>
+
 
   <title>Order System</title>
 
@@ -25,9 +30,6 @@
 </head>
 <body>
   <!-- Navigation -->
-  <?php
-  session_start();
-  ?>
 
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="icon-bar">

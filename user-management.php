@@ -28,8 +28,8 @@ session_start();
 
 <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand mr-auto" href="main_menu-manager.php">Home</a>
-
+    <a class="navbar-brand" href="main_menu-manager.php">Home</a>
+    <a type="button " class="btn btn-warning mr-auto" href="management_menu.php">Back</a>
     <form class="form-inline"> <!-- mt-2 mt-md-0 -->
       <input id="search" class="form-control mr-sm-2 no_focus" type="text" placeholder="Search by username" aria-label=" Search">
       <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->

@@ -112,6 +112,22 @@ $(document).ready(function(){
 		});
 	});
 
+	// $("#viewOrderBtn").click(function(){
+	// 	$.ajax({
+	// 		type: "POST",
+	// 		url: "menu-order-count.php",
+	// 		data: {"operation", },
+	// 		success: function(data, txt, jqxhr){
+	// 			url = 'line-chart.php';
+	// 			window.open(url,"_blank");
+	// 			// alert("You have successfully added.");
+	// 			// refreshTable();
+	// 		}
+	// 	}).fail(function(xhr, status, error){
+	// 		alert(error);
+	// 	});
+	// });
+
 	// view detailed daily bills
 	$(".bill-file").click(function showBills(){
 		var thisrow = $(this).parent();
@@ -197,7 +213,7 @@ function updateReport(day){
 		}
 	}).fail(function(xhr, status, error){
 		alert(error);
-	});	
+	});
 }
 
 // Close the dropdown menu if the user clicks outside of it

@@ -37,7 +37,7 @@ try {
               return $val === "" ? NULL : $val;
             }, $value); // convert empty value to NULL to avoid error
             array_push($value2, strval($idList[$index]));
-            print_r($value2);
+            // print_r($value2);
             $stmt->execute($value2);
         }
         if(isset($_POST["getLastID"])) {

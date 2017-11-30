@@ -177,10 +177,15 @@ span.stat {
   font-size: 20px;
   padding-right: 30px;
 }
-
-#viewOrderBtn {
+footer #viewIncomeBtn {
+  bottom: 10px;
+  right: 250px;
+  position: absolute;
+  color: white;
+}
+footer #viewOrderBtn {
 	bottom: 10px;
-  right: 100px;
+  right: 70px;
   position: absolute;
 }
 
