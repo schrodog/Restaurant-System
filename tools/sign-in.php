@@ -45,6 +45,7 @@ try {
     $stmt->execute();
     
     $_SESSION["StaffID"] = (($stmt->fetchAll())[0])["StaffID"] ;
+    // echo 'staff:'.$_SESSION["StaffID"];
     
 } catch (PDOException $e){
 }

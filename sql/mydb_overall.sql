@@ -98,42 +98,42 @@ CREATE TABLE `order` (
 
 -- insert data --
 
-LOAD DATA LOCAL INFILE '~/Documents/Courses/Database/Project/staff.csv'
+LOAD DATA LOCAL INFILE '~/Programming/php/Restaurant-System/sql/staff.csv'
 INTO TABLE `staff`
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '~/Documents/Courses/Database/Project/table.csv'
+LOAD DATA LOCAL INFILE '~/Programming/php/Restaurant-System/sql/table.csv'
 INTO TABLE `table`
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '~/Documents/Courses/Database/Project/menu.csv'
+LOAD DATA LOCAL INFILE '~/Programming/php/Restaurant-System/sql/menu.csv'
 INTO TABLE `menu`
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '~/Documents/Courses/Database/Project/report.csv'
+LOAD DATA LOCAL INFILE '~/Programming/php/Restaurant-System/sql/report.csv'
 INTO TABLE `report`
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '~/Documents/Courses/Database/Project/masterorder.csv'
+LOAD DATA LOCAL INFILE '~/Programming/php/Restaurant-System/sql/masterorder.csv'
 INTO TABLE `masterorder`
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '~/Documents/Courses/Database/Project/order.csv'
+LOAD DATA LOCAL INFILE '~/Programming/php/Restaurant-System/sql/order.csv'
 INTO TABLE `order`
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -165,7 +165,7 @@ GRANT ALL ON *.* TO '$username'@'localhost' WITH GRANT OPTION;
 GRANT CREATE USER ON *.* TO '$username'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
--- stored procedure for report update --
+-- stored procedure for report update (CREATE IN stored procedure in mysql client) --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `update_report`(p1 int, staffID int(11))
 BEGIN
   declare income int;

@@ -1,8 +1,7 @@
 ID,F.name,L.Name,Age,Username,Password,Contact Number,Position
-1,Emily,Chan,20,emyxxx,29ds4k,65681354,Waitress,F
-2,Greg,Lee,25,hahaUsuc,7dck3i,55928382,Waiter,M
-3,Gabriel,Cheung,29,GC2281,2x3x4x,58200081,Waiter,M
-4,Samuel ,Hon,32,sammi32,xxsuej1,94862218,Cook,M
-5,Chris,Williams,34,CW2000,sejicnq,96727676,Cook,M
-6,Benjamin,Wong,26,bWong999,12583k,91840103,Cashier,M
-7,Joseph,Kwok,40,immaboss,bo28rm,96727779,Manager,M
+1,Emily,Chan,20,emily,29ds4k,65681354,Waitress,F
+2,Greg,Lee,25,greg,7dck3i,55928382,Waiter,M
+3,Gabriel,Cheung,29,gc28,2x3x4x,58200081,Waiter,M
+4,Samuel,Hon,32,cw2000,sejicnq,94862218,Cook,M
+5,Benjamin,Wong,26,bwong,12583k,91840103,Cashier,M
+6,Joseph,Kwok,40,kwok,ka123,96727779,Manager,M

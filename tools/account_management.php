@@ -54,7 +54,7 @@ try {
         GRANT ALL ON Restaurant.`order` TO '$newName'@'localhost';
         GRANT ALL ON Restaurant.report TO '$newName'@'localhost';
         GRANT SELECT, UPDATE(Available) ON Restaurant.`table` TO '$newName'@'localhost';
-        GRANT SELECT(StaffID,password), UPDATE(PassWord) ON Restaurant.staff TO '$newName'@'localhost';
+        GRANT SELECT(StaffID,password,UserName), UPDATE(PassWord) ON Restaurant.staff TO '$newName'@'localhost';
         DROP USER '$username'@'localhost';
         set SQL_SAFE_UPDATES = 1;
         FLUSH PRIVILEGES; ";

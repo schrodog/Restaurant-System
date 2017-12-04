@@ -85,7 +85,7 @@ $(document).ready(function () {
       $.ajax({
         type: "POST",
         url: "tools/update.php",
-        data: { "operation":"update","target_table":"masterorder","valueList":[[paid,change,price,timeStr,staffID]],"idName":"masterOrderID","idList":[masterOrderID],"headerList":["Payment","Change","Price","CheckOut Time,staffID"]},
+        data: { "operation":"update","target_table":"masterorder","valueList":[[paid,change,price,timeStr,staffID]],"idName":"masterOrderID","idList":[masterOrderID],"headerList":["Payment","Change","Price","CheckOut Time","staffID"]},
         success: function(data, txt, jqxhr){
           // alert(data);
         }

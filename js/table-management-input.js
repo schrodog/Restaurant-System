@@ -208,7 +208,8 @@ function GoToTable(tableNo,available){
     // create new master order and go to order page
     $("#assignNewModal #OK").one('click',function(){
       var d = new Date();
-      var currentDate = d.getUTCFullYear()+'-'+ d.getUTCMonth()+'-'+ d.getUTCDate();
+      var currentDate = d.getUTCFullYear()+'-'+ (Number(d.getUTCMonth())+1)+'-'+ d.getUTCDate();
+			console.log('date:'+currentDate);
       $.ajax({
         type: "POST",
         url: "tools/update.php",
@@ -226,6 +227,7 @@ function GoToTable(tableNo,available){
         data: { "operation": "insert","target_table":"masterorder","valueList":[[tableNo,currentDate]],"headerList":["TableNo","CheckOut Date"],"getLastID":"1" },
         success: function(data, txt, jqxhr){
           // alert(JSON.parse(data));
+					// alert(data);
           goToOrder(data,tableNo);
           // refreshData();
         }
